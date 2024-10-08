@@ -19,10 +19,10 @@ class UsuarioControlador {
             session_start();
             $_SESSION['usuario'] = $usuario['nombre_usuario'];
             $_SESSION['rol'] = $usuario['rol'];
-            header("Location: /vista/dashboard.php");
+            header("Location: ../vista/dashboard.php");
             exit();
         } else {
-            header("Location: /vista/index.php?error=Credenciales incorrectas");
+            header("Location: ../vista/index.php?error=Credenciales incorrectas");
             exit();
         }
     }
