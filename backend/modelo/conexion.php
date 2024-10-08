@@ -1,10 +1,10 @@
 <?php
-#CONEXIÓN A LA BASE DE DATOS -> CINEMA
+
 Class Conexion{
 
 	static public function conectar(){
 
-		$link = new PDO("mysql:host=localhost;dbname=",
+		$link = new PDO("mysql:host=localhost;dbname=cine",
 						"root",
 						"");
 
@@ -14,6 +14,5 @@ Class Conexion{
 
 	}
 
-}
 
-?>
+}
