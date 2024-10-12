@@ -1,5 +1,6 @@
 <?php
     require_once "conexion.php";
+
     class UsuarioModelo {
     private $conexion;
 

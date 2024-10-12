@@ -14,31 +14,33 @@ class UsuarioControlador {
     public function iniciarSesion($nombreUsuario, $contrasenaUsuario) {
         $usuario = $this->modelo->obtenerUsuarioPorNombre($nombreUsuario);
         
-        // Comparación directa de la contraseña sin usar password_verify()
+        // Comparar contraseña (aquí puedes mejorar usando password_verify)
         if ($usuario && $usuario['contrasena_usuario'] === $contrasenaUsuario) {
             session_start();
             $_SESSION['usuario'] = $usuario['nombre_usuario'];
             $_SESSION['rol'] = $usuario['rol'];
+
+            // Redirigir al dashboard si el inicio de sesión es exitoso
             header("Location: ../vista/dashboard.php");
             exit();
         } else {
-            header("Location: ../vista/index.php?error=Credenciales incorrectas");
+            // Si el login falla, devolver un mensaje de error
+            header("Location: ../vista/login.php?error=1");
             exit();
         }
     }
-    
 }
 
-// Aquí procesamos el envío del formulario
+// Procesar el envío del formulario
 if (isset($_POST['iniciarSesion'])) {
-    // Capturamos los valores enviados por el formulario
+    // Capturar los valores del formulario
     $nombreUsuario = $_POST['nombreUsuario'];
     $contrasenaUsuario = $_POST['contrasenaUsuario'];
 
-    // Creamos una instancia del controlador
+    // Crear instancia del controlador
     $controlador = new UsuarioControlador();
 
-    // Llamamos a la función para iniciar sesión
+    // Llamar la función de iniciar sesión
     $controlador->iniciarSesion($nombreUsuario, $contrasenaUsuario);
 }
 ?>

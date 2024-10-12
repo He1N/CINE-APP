@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,6 +18,7 @@
 </head>
 <body>
 <div class="container-fluid">
+        
         <div class="row">
             <!-- Columna para la imagen de fondo -->
             <div class="col-md-7 image-left">
@@ -45,10 +47,10 @@
                             <span class="input-group-text icon-eye"><i class="fas fa-eye"></i></span>
                         </div>
 
-                        <!-- Mostrar error si existe -->
-                        <?php if (isset($_GET['error'])): ?>
-                            <div class="alert alert-danger">
-                                <?php echo $_GET['error']; ?>
+                        <!-- Verificar si hay un mensaje de error en la URL -->
+                        <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+                            <div class="alert alert-danger" role="alert">
+                                <p>Usuario o contraseña inválidos.</p>
                             </div>
                         <?php endif; ?>
                         <br><br>
