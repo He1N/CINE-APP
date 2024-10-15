@@ -1,0 +1,65 @@
+/* Estilos generales para la barra superior */
+.top-bar {
+    width: 100%;
+    height: 60px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 120px; /* Ajusta la posición dejando espacio para el sidebar */
+    z-index: 10;
+}
+
+/* Contenido del lado izquierdo */
+.left-content {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/* Contenido del lado derecho */
+.right-content {
+    display: flex;
+    align-items: center;
+}
+
+.icon-notificaciones {
+    font-size: 24px;
+    margin-right: 20px;
+    cursor: pointer;
+    color: #2f3653;
+}
+
+/* Información del usuario */
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.username {
+    font-size: 16px;
+    color: #2f3653;
+    margin-right: 5px;
+}
+
+.role {
+    font-size: 14px;
+    color: #999;
+    font-weight: bold;
+}
