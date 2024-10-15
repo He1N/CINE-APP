@@ -11,9 +11,9 @@
     <div class="sidebar">
         <div id="logo_sidebar"></div>
         <ul class="nav-list">
-            <li><a href="#dashboard"><i class="icon-dashboard"></i> Dashboard</a></li>
-            <li><a href="#usuarios"><i class="icon-usuarios"></i> Usuarios</a></li>
-            <li><a href="#entradas"><i class="icon-entradas"></i> Entradas</a></li>
+            <li><a href="./dashboard.php"><i class="icon-dashboard"></i> Dashboard</a></li>
+            <li><a href="./usuarios.php"><i class="icon-usuarios"></i> Usuarios</a></li>
+            <li><a href="./entradas.php"><i class="icon-entradas"></i> Entradas</a></li>
             <li><a href="#peliculas"><i class="icon-peliculas"></i> Películas</a></li>
             <li><a href="#ofertas"><i class="icon-ofertas"></i> Ofertas</a></li>
         </ul>
