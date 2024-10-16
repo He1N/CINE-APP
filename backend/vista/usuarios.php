@@ -36,8 +36,6 @@ $admins = $controlador->mostrarTablaAdmin();
         include 'layout/topbar.php';
         ?>
        
-        
-    
         <div class="container my-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Usuarios</h2>
@@ -45,7 +43,7 @@ $admins = $controlador->mostrarTablaAdmin();
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formularioModal">Nuevo Administrador</button>
             </div>
 
-            <!-- Modal de formulario -->
+            <!-- Modal de formulario añadir-->
             <div class="modal fade" id="formularioModal" tabindex="-1" aria-labelledby="formularioModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -79,6 +77,8 @@ $admins = $controlador->mostrarTablaAdmin();
                         <th>Nombre</th>
                         <th>Contraseña</th>
                         <th>Rol</th>
+                        <th>Editar</th> <!-- Nueva columna para editar -->
+                        <th>Eliminar</th> <!-- Nueva columna para eliminar -->
                     </tr>
                 </thead>
                 <tbody>
@@ -88,14 +88,64 @@ $admins = $controlador->mostrarTablaAdmin();
                             <td><?php echo $admin['nombre_usuario']; ?></td>
                             <td><?php echo $admin['contrasena_usuario']; ?></td>
                             <td><?php echo $admin['rol']; ?></td>
+                            <td>
+                                <!-- Botón para editar -->
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#formularioModalEditar" onclick="llenarFormulario(<?php echo $admin['id']; ?>, '<?php echo $admin['nombre_usuario']; ?>', '<?php echo $admin['contrasena_usuario']; ?>')">
+                                    <i class="fas fa-edit"></i> <!-- Icono de editar -->
+                                </button>
+                            </td>
+                            <td>
+                                <!-- Botón para eliminar -->
+                                <form action="../controlador/usuario.controlador.php" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
+                                    <input type="hidden" name="accion" value="eliminar">
+                                    <input type="hidden" name="id" value="<?php echo $admin['id']; ?>">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <!-- Modal de formulario editar -->
+            <div class="modal fade" id="formularioModalEditar" tabindex="-1" aria-labelledby="formularioModalE" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="formularioModalE">Editar Datos Administrador</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="../controlador/usuario.controlador.php" method="POST">
+                                <input type="hidden" name="id" id="idAdmin"> <!-- Campo oculto para ID -->
+                                <div class="mb-3">
+                                    <label for="nombreAdmin" class="form-label">Nombre de Usuario:</label>
+                                    <input type="text" class="form-control" id="nuevoNombre" name="nuevoNombre" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="contrasenaAdmin" class="form-label">Contraseña:</label>
+                                    <input type="password" class="form-control" id="nuevaContrasena" name="nuevaContrasena" required>
+                                </div>
+                                <button type="submit" name="editarAdmin" class="btn btn-success">Enviar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Bootstrap JS y dependencias -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/app.js"></script>
+    <script>
+        // Función para rellenar el formulario del modal con los datos seleccionados
+        function llenarFormulario(id, nombre, contrasena) {
+            document.getElementById('idAdmin').value = id; // Asignar el ID oculto
+            document.getElementById('nuevoNombre').value = nombre; // Asignar el nombre al input
+            document.getElementById('nuevaContrasena').value = contrasena; // Asignar la contraseña al input
+        }
+
+    </script>
 </body>
 </html>

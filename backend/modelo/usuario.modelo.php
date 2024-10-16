@@ -38,7 +38,24 @@
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    
+        // Nueva función para eliminar un administrador por su ID
+    public function eliminarAdmin($id) {
+        $query = $this->conexion->prepare("DELETE FROM usuario_admin WHERE id = :id");
+        $query->bindParam(':id', $id);
+        
+        return $query->execute(); // Retorna true si la eliminación fue exitosa
+    }
+
+    // Nueva función para editar un administrador
+    public function editarAdmin($id, $nombreAdmin, $contrasenaAdmin) {
+        $query = $this->conexion->prepare("UPDATE usuario_admin SET nombre_usuario = :nombreAdmin, contrasena_usuario = :contrasenaAdmin WHERE id = :id");
+        $query->bindParam(':id', $id);
+        $query->bindParam(':nombreAdmin', $nombreAdmin);
+        $query->bindParam(':contrasenaAdmin', $contrasenaAdmin);
+        
+        return $query->execute(); // Retorna true si la actualización fue exitosa
+    }
+
 }
 ?>
 

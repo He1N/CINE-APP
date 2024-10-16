@@ -31,7 +31,7 @@ class UsuarioControlador {
 
     public function nuevoAdmin($nombreAdmin, $contrasenaAdmin) {
         $usuarioAdmin = $this->modelo->registrarNuevoAdmin($nombreAdmin,$contrasenaAdmin);
-        header("Location: ../vista/dashboard.php");
+        header("Location: ../vista/usuarios.php");
         exit();
     }
     
@@ -39,6 +39,19 @@ class UsuarioControlador {
         // Llamar al modelo para obtener todos los administradores
         $admins = $this->modelo->verTablaAdmin();
         return $admins;   
+    }
+     // Función para eliminar un administrador
+     public function eliminarAdmin($id) {
+        $this->modelo->eliminarAdmin($id); // Llamar al modelo para eliminar
+        header("Location: ../vista/usuarios.php");
+        exit();
+    }
+
+    // Función para editar un administrador
+    public function editarAdmin($id, $nuevoNombre, $nuevaContrasena) {
+        $editarAdmin = $this->modelo->editarAdmin($id, $nuevoNombre, $nuevaContrasena); // Llamar al modelo para editar
+        header("Location: ../vista/usuarios.php");
+        exit();
     }
 }
 
@@ -71,10 +84,35 @@ if (isset($_POST['nuevoAdmin'])) {
 
         $controlador->nuevoAdmin($nombreAdmin,$contrasenaAdmin);
     }else {
-        header("Location: ../vista/dashboard.php");
+        header("Location: ../vista/usuarios.php");
         exit();
     }
 }
 
+// Procesar las solicitudes POST para editar o eliminar
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $controlador = new UsuarioControlador();
 
+    if (isset($_POST['accion'])) {
+        if ($_POST['accion'] === 'eliminar') {
+            // Llamar a la función eliminar
+            $id = $_POST['id'];
+            $controlador->eliminarAdmin($id);
+        } 
+    }
+}
+
+if (isset($_POST['editarAdmin'])) {
+    $id = $_POST['id'];
+    $nuevoNombre = $_POST['nuevoNombre'];
+    $nuevaContrasena = $_POST['nuevaContrasena'];
+    if($nuevoNombre && $nuevaContrasena) {
+        $controlador = new UsuarioControlador();
+
+        $controlador->editarAdmin($id,$nuevoNombre,$nuevaContrasena);
+    }else {
+        header("Location: ../vista/usuarios.php");
+        exit();
+    }
+}
 ?>
