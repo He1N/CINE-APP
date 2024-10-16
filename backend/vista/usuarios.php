@@ -86,7 +86,7 @@ $admins = $controlador->mostrarTablaAdmin();
                         <tr>
                             <td><?php echo $admin['id']; ?></td>
                             <td><?php echo $admin['nombre_usuario']; ?></td>
-                            <td><?php echo $admin['contrasena_usuario']; ?></td>
+                            <td><?php echo str_repeat('*', strlen($admin['contrasena_usuario'])); ?></td> <!-- Contraseña oculta -->
                             <td><?php echo $admin['rol']; ?></td>
                             <td>
                                 <!-- Botón para editar -->
@@ -144,6 +144,14 @@ $admins = $controlador->mostrarTablaAdmin();
             document.getElementById('idAdmin').value = id; // Asignar el ID oculto
             document.getElementById('nuevoNombre').value = nombre; // Asignar el nombre al input
             document.getElementById('nuevaContrasena').value = contrasena; // Asignar la contraseña al input
+        }
+        function togglePassword(id) {
+            var passwordField = document.getElementById('password_' + id);
+            if (passwordField.style.fontFamily === 'password') {
+                passwordField.style.fontFamily = 'Arial';
+            } else {
+                passwordField.style.fontFamily = 'password';
+            }
         }
 
     </script>
