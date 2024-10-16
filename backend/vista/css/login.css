@@ -1,0 +1,102 @@
+ /* Estilos personalizados */
+ body, html {
+    height: 100%;
+    margin: 0;
+}
+#logo {
+    background-image: url('../images/logo.png');
+    background-size: contain; /* Ajusta la imagen para que se vea completa */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen horizontalmente */
+    height: 250px; /* Ajusta el tamaño del contenedor */
+    margin: 0 auto; /* Asegura que el contenedor esté centrado */
+    padding-top: 20px; /* Ajusta el espacio superior para reducir el vacío */
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center; /* Alinea el contenido en el centro horizontalmente */
+    align-items: center; /* Alinea el contenido en el centro verticalmente */
+}
+
+.image-left {
+    background-image: url('../images/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+.form-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #2B324E;
+    color: #fff;
+}
+.form-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 1px;
+    background-color: #2B324E;
+    border-radius: 12px;
+}
+.form-control {
+    background-color: transparent;
+    border: 1px solid #F1EED0;
+    border-radius: 10px;
+    color: #F1EED0;
+    opacity: 0.75;
+}
+.form-control::placeholder {
+    color: #F1EED0;
+    opacity: 0.75;
+}
+.input-group-text {
+    background-color: transparent;
+    border: 1px solid #F1EED0;
+    border-radius: 10px;
+    color: #F1EED0;
+    opacity: 0.75;
+}
+.btn-custom {
+    background-color: #F1EED0;
+    color: #2B324E;
+    margin-bottom: 100px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.btn-custom:hover {
+    background-color: #CB2D2C; /* Color del botón cuando pasas el mouse */
+  }
+.icon-eye {
+    cursor: pointer;
+}
+.login-title {
+    font-family: 'Istok Web', sans-serif;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ajusta la sombra del texto */
+}
+
+
+/*FUENTES*/
+.istok-web-regular {
+    font-family: "Istok Web", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .istok-web-bold {
+    font-family: "Istok Web", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .istok-web-regular-italic {
+    font-family: "Istok Web", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+  
+  .istok-web-bold-italic {
+    font-family: "Istok Web", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+  }
+  
