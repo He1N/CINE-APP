@@ -16,26 +16,26 @@
         $query->execute();
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-    public function registrarAdmin($nombreUsuario, $contrasena, $rol = 'admin') {
-        var_dump("Entrando a registrarAdmin");
+    public function registrarNuevoAdmin($nombreAdmin, $contrasenaAdmin) {
+        $rolAdmin = 'admin';
+        $query = $this->conexion->prepare("INSERT INTO usuario_admin (nombre_usuario, contrasena_usuario, rol) VALUES (:nombreAdmin, :contrasenaAdmin, :rolAdmin);");
         
-        $query = $this->conexion->prepare("INSERT INTO usuario_admin (nombre_usuario, contrasena_usuario, rol) VALUES (:nombreUsuario, :contrasena, :rol)");
+        $query->bindParam(':nombreAdmin', $nombreAdmin);
+        $query->bindParam(':contrasenaAdmin', $contrasenaAdmin);
+        $query->bindParam(':rolAdmin', $rolAdmin);
+        
+        return $query->execute(); // Retorna true si la inserción fue exitosa
+    }
     
-        $query->bindParam(':nombreUsuario', $nombreUsuario);
-        $query->bindParam(':contrasena', $contrasena);
-        $query->bindParam(':rol', $rol);
-    
-        // Muestra los valores para verificar
-        var_dump($nombreUsuario, $contrasena, $rol);
-    
-        if ($query->execute()) {
-            var_dump("Inserción exitosa");
-            return true;
-        } else {
-            var_dump("Fallo en la inserción");
-            var_dump($query->errorInfo()); // Mostrar errores de SQL si existen
-            return false;
-        }
+    public function verTablaAdmin() {
+        // Preparar la consulta SQL
+        $query = $this->conexion->prepare("SELECT * FROM usuario_admin");
+        
+        // Ejecutar la consulta
+        $query->execute();
+        
+        // Retornar los resultados en un array asociativo
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
     
     
