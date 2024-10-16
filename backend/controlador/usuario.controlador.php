@@ -14,11 +14,6 @@ class UsuarioControlador {
     public function iniciarSesion($nombreUsuario, $contrasenaUsuario) {
         $usuario = $this->modelo->obtenerUsuarioPorNombre($nombreUsuario);
 
-<<<<<<< HEAD
-=======
-        // Comparación directa de la contraseña sin usar password_verify()
-        // Comparar contraseña (aquí puedes mejorar usando password_verify)
->>>>>>> 30a4a635940b3080b2970d0536428de8c2f8ed95
         if ($usuario && $usuario['contrasena_usuario'] === $contrasenaUsuario) {
             session_start();
             $_SESSION['usuario'] = $usuario['nombre_usuario'];
@@ -34,15 +29,10 @@ class UsuarioControlador {
         }
     }
 
-<<<<<<< HEAD
     public function nuevoAdmin($nombreAdmin, $contrasenaAdmin) {
         $usuarioAdmin = $this->modelo->registrarNuevoAdmin($nombreAdmin,$contrasenaAdmin);
         header("Location: ../vista/dashboard.php");
         exit();
-=======
-    public function registrarNuevoAdmin($nombre, $contrasena) {
-            
->>>>>>> 30a4a635940b3080b2970d0536428de8c2f8ed95
     }
     
     public function mostrarTablaAdmin() {

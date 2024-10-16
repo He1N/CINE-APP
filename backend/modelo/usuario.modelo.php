@@ -16,7 +16,6 @@
         $query->execute();
         return $query->fetch(PDO::FETCH_ASSOC);
     }
-<<<<<<< HEAD
     public function registrarNuevoAdmin($nombreAdmin, $contrasenaAdmin) {
         $rolAdmin = 'admin';
         $query = $this->conexion->prepare("INSERT INTO usuario_admin (nombre_usuario, contrasena_usuario, rol) VALUES (:nombreAdmin, :contrasenaAdmin, :rolAdmin);");
@@ -37,10 +36,6 @@
         
         // Retornar los resultados en un array asociativo
         return $query->fetchAll(PDO::FETCH_ASSOC);
-=======
-    public function registrarAdmin($nombreUsuario, $contrasena, $rol = 'admin') {
-        
->>>>>>> 30a4a635940b3080b2970d0536428de8c2f8ed95
     }
     
     
