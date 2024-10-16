@@ -13,16 +13,18 @@ class UsuarioControlador {
     // Función para iniciar sesión
     public function iniciarSesion($nombreUsuario, $contrasenaUsuario) {
         $usuario = $this->modelo->obtenerUsuarioPorNombre($nombreUsuario);
-        
-        if ($usuario && password_verify($contrasenaUsuario, $usuario['contrasena_usuario'])) {
+
+        // Comparación directa de la contraseña sin usar password_verify()
+        // Comparar contraseña (aquí puedes mejorar usando password_verify)
+        if ($usuario && $usuario['contrasena_usuario'] === $contrasenaUsuario) {
             session_start();
             $_SESSION['usuario'] = $usuario['nombre_usuario'];
             $_SESSION['rol'] = $usuario['rol'];
-
             // Redirigir al dashboard si el inicio de sesión es exitoso
             header("Location: ../vista/dashboard.php");
             exit();
         } else {
+            header("Location: ../vista/index.php?error=Credenciales incorrectas");
             // Si el login falla, devolver un mensaje de error
             header("Location: ../vista/login.php?error=1");
             exit();
@@ -30,19 +32,7 @@ class UsuarioControlador {
     }
 
     public function registrarNuevoAdmin($nombre, $contrasena) {
-        // Muestra un mensaje cuando se llegue a este punto
-        var_dump("Entrando a registrarNuevoAdmin");
-        $nombre = $_POST['nombre'];
-        $contrasena = $_POST['contrasena'];
-    
-        // Verifica el valor de las variables
-        var_dump($nombre);
-        var_dump($contrasena);
-    
-        $this->modelo->registrarAdmin($nombre, $contrasena);
-    
-        header("Location: ./dashboard.php");
-        exit();
+            
     }
     
     

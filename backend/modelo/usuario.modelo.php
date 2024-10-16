@@ -17,25 +17,7 @@
         return $query->fetch(PDO::FETCH_ASSOC);
     }
     public function registrarAdmin($nombreUsuario, $contrasena, $rol = 'admin') {
-        var_dump("Entrando a registrarAdmin");
         
-        $query = $this->conexion->prepare("INSERT INTO usuario_admin (nombre_usuario, contrasena_usuario, rol) VALUES (:nombreUsuario, :contrasena, :rol)");
-    
-        $query->bindParam(':nombreUsuario', $nombreUsuario);
-        $query->bindParam(':contrasena', $contrasena);
-        $query->bindParam(':rol', $rol);
-    
-        // Muestra los valores para verificar
-        var_dump($nombreUsuario, $contrasena, $rol);
-    
-        if ($query->execute()) {
-            var_dump("Inserción exitosa");
-            return true;
-        } else {
-            var_dump("Fallo en la inserción");
-            var_dump($query->errorInfo()); // Mostrar errores de SQL si existen
-            return false;
-        }
     }
     
     
