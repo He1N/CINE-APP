@@ -28,7 +28,7 @@ class UsuarioControlador {
             exit();
         }
     }
-
+     // Función para crear un administrador
     public function nuevoAdmin($nombreAdmin, $contrasenaAdmin) {
         $usuarioAdmin = $this->modelo->registrarNuevoAdmin($nombreAdmin,$contrasenaAdmin);
         header("Location: ../vista/usuarios.php");

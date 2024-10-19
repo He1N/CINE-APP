@@ -16,16 +16,33 @@
         $query->execute();
         return $query->fetch(PDO::FETCH_ASSOC);
     }
+    //AGREGAR NUEVO ADMIN
     public function registrarNuevoAdmin($nombreAdmin, $contrasenaAdmin) {
         $rolAdmin = 'admin';
-        $query = $this->conexion->prepare("INSERT INTO usuario_admin (nombre_usuario, contrasena_usuario, rol) VALUES (:nombreAdmin, :contrasenaAdmin, :rolAdmin);");
-        
-        $query->bindParam(':nombreAdmin', $nombreAdmin);
-        $query->bindParam(':contrasenaAdmin', $contrasenaAdmin);
-        $query->bindParam(':rolAdmin', $rolAdmin);
-        
-        return $query->execute(); // Retorna true si la inserción fue exitosa
+    
+        // Verificar si ya existe un usuario con el mismo nombre
+        $verificar_admin = $this->conexion->prepare("SELECT * FROM usuario_admin WHERE nombre_usuario = :nombreAdmin");
+        $verificar_admin->bindParam(':nombreAdmin', $nombreAdmin);
+        $verificar_admin->execute();
+    
+        // Usamos fetch() para comprobar si hay un resultado
+        if($verificar_admin->fetch()) {
+            return false; // Retornar false si el usuario ya existe
+        } else {
+            // Usar password_hash() para almacenar la contraseña de manera segura
+            $hashedPassword = password_hash($contrasenaAdmin, PASSWORD_DEFAULT);
+    
+            // Insertar el nuevo administrador
+            $query = $this->conexion->prepare("INSERT INTO usuario_admin (nombre_usuario, contrasena_usuario, rol) VALUES (:nombreAdmin, :contrasenaAdmin, :rolAdmin)");
+            
+            $query->bindParam(':nombreAdmin', $nombreAdmin);
+            $query->bindParam(':contrasenaAdmin', $hashedPassword); // Guardar la contraseña encriptada
+            $query->bindParam(':rolAdmin', $rolAdmin);
+    
+            return $query->execute(); // Retornar true si la inserción fue exitosa
+        }
     }
+    
     
     public function verTablaAdmin() {
         // Preparar la consulta SQL
