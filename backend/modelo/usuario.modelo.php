@@ -57,15 +57,15 @@
         return $query->execute(); // Retorna true si la eliminación fue exitosa
     }
     //VER TABLA ADMINISTRADORES
-    public function verTablaAdmin() {
-        // Preparar la consulta SQL
-        $query = $this->conexion->prepare("SELECT * FROM usuario_admin");
+    static public function verTablaAdmin() {
         
-        // Ejecutar la consulta
-        $query->execute();
+        $query = Conexion::conectar()->prepare("SELECT * FROM usuario_admin");
+
+		$query -> execute();
+
+		return $query -> fetchAll();
         
-        // Retornar los resultados en un array asociativo
-        return $query->fetchAll(PDO::FETCH_ASSOC);
+       
     }
     
 }

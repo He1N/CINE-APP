@@ -7,6 +7,7 @@ if (!isset($_SESSION['usuario'])) {
     header('Location: ../vista/login.php');
     exit;
 }
+
 require_once '../controlador/usuario.controlador.php';
 
 // Crear una instancia del controlador
@@ -23,13 +24,13 @@ $admins = $controlador->mostrarTablaAdmin();
     <link rel="stylesheet" href="css/panel.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!--JQUERY-->
+    <!--JQUERY y AJAX DATATABLES-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!--SWEET ALERT-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+    
     
 </head>
 
@@ -77,16 +78,31 @@ $admins = $controlador->mostrarTablaAdmin();
             
 
             <!-- Tabla de administradores -->
+             
             <h2>Lista de Administradores</h2><br>
-            <table class="table table-striped">
+            <table class="table table-bordered table-striped dt-responsive tablaAdministradores" width="100%">
+                <thead>
+                    <tr>
+                        <th style="width:10px">#</th>
+                        <th>Nombre</th>
+                        <th>Contraseña</th>
+                        <th>Rol</th>
+                        <th>Editar</th> 
+                        <th>Eliminar</th> 
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <br><br><br>
+            <table  class="table table-striped display">
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Contraseña</th>
                         <th>Rol</th>
-                        <th>Editar</th> <!-- Nueva columna para editar -->
-                        <th>Eliminar</th> <!-- Nueva columna para eliminar -->
+                        <th>Editar</th> 
+                        <th>Eliminar</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -106,7 +122,7 @@ $admins = $controlador->mostrarTablaAdmin();
                                 <!-- Botón para eliminar -->
                                 <form id="adminFormDelete" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $admin['id']; ?>">
-                                    <button type="submit" name="eliminarAdmin" class="btn btn-danger btn-block"">
+                                    <button type="submit" name="eliminarAdmin" class="btn btn-danger btn-block">
                                         <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
                                     </button>
                                 </form>
@@ -144,6 +160,8 @@ $admins = $controlador->mostrarTablaAdmin();
     </div>
     <!-- Bootstrap JS y dependencias -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JS de DataTables  -->
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="js/app.js"></script>
     <script src="js/usuario.js"></script>
     <script>

@@ -100,11 +100,13 @@ class UsuarioControlador {
     }
     
 
-    public function mostrarTablaAdmin() {
-        // Llamar al modelo para obtener todos los administradores
-        $admins = $this->modelo->verTablaAdmin();
-        return $admins;   
+    static public function mostrarTablaAdmin() {
+        // Obtener los datos desde la base de datos
+		$respuesta = UsuarioModelo::verTablaAdmin();
+        return $respuesta;
+
     }
+    
     
 }
 
