@@ -1,6 +1,7 @@
 <?php
 session_start(); // Iniciar la sesión
 
+
 // Verificar si la sesión está activa
 if (!isset($_SESSION['usuario'])) {
     // Si no está autenticado, redirigir al inicio de sesión
@@ -8,7 +9,7 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 ?>
-
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>

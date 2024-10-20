@@ -12,3 +12,7 @@ mostrarFormularioBtn.addEventListener('click', () => {
 cerrarFormularioBtn.addEventListener('click', () => {
     formularioOverlay.style.display = 'none';
 });
+
+new DataTable('#example', {
+    ajax: 'arrays.txt'
+});
