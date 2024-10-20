@@ -26,6 +26,10 @@ $admins = $controlador->mostrarTablaAdmin();
     <!--JQUERY-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!--SWEET ALERT-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     
 </head>
 
@@ -55,7 +59,7 @@ $admins = $controlador->mostrarTablaAdmin();
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="../controlador/usuario.controlador.php" method="POST">
+                            <form id="adminFormAdd" method="POST">
                                 <div class="mb-3">
                                     <label for="nombreAdmin" class="form-label">Nombre de Usuario:</label>
                                     <input type="text" class="form-control" id="nombreAdmin" name="nombreAdmin" required>
@@ -94,16 +98,15 @@ $admins = $controlador->mostrarTablaAdmin();
                             <td><?php echo $admin['rol']; ?></td>
                             <td>
                                 <!-- Botón para editar -->
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#formularioModalEditar" onclick="llenarFormulario(<?php echo $admin['id']; ?>, '<?php echo $admin['nombre_usuario']; ?>', '<?php echo $admin['contrasena_usuario']; ?>')">
+                                <button type="button" class="btn btn-warning btn-block" data-bs-toggle="modal" data-bs-target="#formularioModalEditar" onclick="llenarFormulario(<?php echo $admin['id']; ?>, '<?php echo $admin['nombre_usuario']; ?>', '<?php echo $admin['contrasena_usuario']; ?>')">
                                     <i class="fas fa-edit"></i> <!-- Icono de editar -->
                                 </button>
                             </td>
                             <td>
                                 <!-- Botón para eliminar -->
-                                <form action="../controlador/usuario.controlador.php" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este usuario?');">
-                                    <input type="hidden" name="accion" value="eliminar">
+                                <form id="adminFormDelete" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $admin['id']; ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm">
+                                    <button type="submit" name="eliminarAdmin" class="btn btn-danger btn-block"">
                                         <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
                                     </button>
                                 </form>
@@ -121,7 +124,7 @@ $admins = $controlador->mostrarTablaAdmin();
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form action="../controlador/usuario.controlador.php" method="POST">
+                            <form id="adminFormEdit" method="POST">
                                 <input type="hidden" name="id" id="idAdmin"> <!-- Campo oculto para ID -->
                                 <div class="mb-3">
                                     <label for="nombreAdmin" class="form-label">Nombre de Usuario:</label>
@@ -142,6 +145,7 @@ $admins = $controlador->mostrarTablaAdmin();
     <!-- Bootstrap JS y dependencias -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/usuario.js"></script>
     <script>
         // Función para rellenar el formulario del modal con los datos seleccionados
         function llenarFormulario(id, nombre, contrasena) {
@@ -157,7 +161,6 @@ $admins = $controlador->mostrarTablaAdmin();
                 passwordField.style.fontFamily = 'password';
             }
         }
-
     </script>
 </body>
 </html>

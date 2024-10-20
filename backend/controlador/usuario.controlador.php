@@ -30,29 +30,82 @@ class UsuarioControlador {
     }
      // Función para crear un administrador
     public function nuevoAdmin($nombreAdmin, $contrasenaAdmin) {
-        $usuarioAdmin = $this->modelo->registrarNuevoAdmin($nombreAdmin,$contrasenaAdmin);
-        header("Location: ../vista/usuarios.php");
-        exit();
+        $usuarioAdmin = $this->modelo->registrarNuevoAdmin($nombreAdmin, $contrasenaAdmin);
+
+        if ($usuarioAdmin) {
+            // Si el registro es exitoso, devolvemos una respuesta de éxito
+            echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Administrador creado!',
+                        text: 'El nuevo administrador se ha registrado correctamente.'
+                    });
+                  </script>";
+        } else {
+            // Si hay un error en el registro
+            echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un problema al registrar el administrador.'
+                    });
+                  </script>";
+        }
+    }
+    // Función para editar un administrador
+    public function editarAdmin($id, $nuevoNombre, $nuevaContrasena) {
+        $editarAdmin = $this->modelo->editarAdmin($id, $nuevoNombre, $nuevaContrasena); // Llamar al modelo para editar
+        if ($editarAdmin) {
+            // Si el registro es exitoso, devolvemos una respuesta de éxito
+            echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Campos editados!',
+                        text: 'Los campos se han editado correctamente.'
+                    });
+                </script>";
+
+        } else {
+            // Si hay un error en el registro
+            echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un problema al editar el administrador.'
+                    });
+                  </script>";
+        }
+    }
+    // Función para eliminar un administrador
+    public function eliminarAdmin($id) {
+        $eliminarAdmin = $this->modelo->eliminarAdmin($id); // Llamar al modelo para eliminar
+    
+        if ($eliminarAdmin) {
+            echo "<script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'elimi editados!',
+                        text: 'Los campos se han editado correctamente.'
+                    });
+                </script>";
+        } else {
+            echo "<script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un problema al editar el administrador.'
+                    });
+                  </script>";
+        }
     }
     
+
     public function mostrarTablaAdmin() {
         // Llamar al modelo para obtener todos los administradores
         $admins = $this->modelo->verTablaAdmin();
         return $admins;   
     }
-     // Función para eliminar un administrador
-     public function eliminarAdmin($id) {
-        $this->modelo->eliminarAdmin($id); // Llamar al modelo para eliminar
-        header("Location: ../vista/usuarios.php");
-        exit();
-    }
-
-    // Función para editar un administrador
-    public function editarAdmin($id, $nuevoNombre, $nuevaContrasena) {
-        $editarAdmin = $this->modelo->editarAdmin($id, $nuevoNombre, $nuevaContrasena); // Llamar al modelo para editar
-        header("Location: ../vista/usuarios.php");
-        exit();
-    }
+    
 }
 
 // Procesar el envío del formulario LOGIN.PHP
@@ -73,46 +126,62 @@ if (isset($_POST['iniciarSesion'])) {
         exit();
     }
 }
-// Procesar el envío del formulario USUARIOS.PHP
+// Procesar el envío del formulario del nuevo administrador
 
-if (isset($_POST['nuevoAdmin'])) {
+if (isset($_POST['nombreAdmin']) && isset($_POST['contrasenaAdmin'])) {
     $nombreAdmin = $_POST['nombreAdmin'];
     $contrasenaAdmin = $_POST['contrasenaAdmin'];
 
-    if($nombreAdmin && $contrasenaAdmin) {
+    if ($nombreAdmin && $contrasenaAdmin) {
         $controlador = new UsuarioControlador();
-
-        $controlador->nuevoAdmin($nombreAdmin,$contrasenaAdmin);
-    }else {
-        header("Location: ../vista/usuarios.php");
-        exit();
+        $controlador->nuevoAdmin($nombreAdmin, $contrasenaAdmin);
+    } else {
+        echo "<script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, completa todos los campos.'
+                });
+              </script>";
     }
 }
+// Procesar el envío del formulario de editar administrador
 
-// Procesar las solicitudes POST para editar o eliminar
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controlador = new UsuarioControlador();
-
-    if (isset($_POST['accion'])) {
-        if ($_POST['accion'] === 'eliminar') {
-            // Llamar a la función eliminar
-            $id = $_POST['id'];
-            $controlador->eliminarAdmin($id);
-        } 
-    }
-}
-
-if (isset($_POST['editarAdmin'])) {
+if(isset($_POST['nuevoNombre']) && isset($_POST['nuevaContrasena'])){
     $id = $_POST['id'];
     $nuevoNombre = $_POST['nuevoNombre'];
     $nuevaContrasena = $_POST['nuevaContrasena'];
+
     if($nuevoNombre && $nuevaContrasena) {
         $controlador = new UsuarioControlador();
-
         $controlador->editarAdmin($id,$nuevoNombre,$nuevaContrasena);
     }else {
-        header("Location: ../vista/usuarios.php");
-        exit();
+        echo "<script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, completa todos los campos.'
+                });
+              </script>";
     }
 }
+// Procesar el envío del formulario de eliminar administrador
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminarAdmin'])) {
+    $id = $_POST['id'];
+
+    if ($id) {
+        $controlador = new UsuarioControlador();
+        $controlador->eliminarAdmin($id);
+    } else {
+        echo "<script>
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Campos incompletos',
+                    text: 'Por favor, completa todos los campos.'
+                });
+              </script>";
+    }
+}
+
 ?>
