@@ -9,7 +9,6 @@ $(document).ready(function() {
             url: '../controlador/usuario.controlador.php',
             data: $(this).serialize(),
             success: function(response) {
-                // Aquí se insertan los mensajes de SweetAlert directamente desde el controlador
                 $('body').append(response); // Ejecuta el script de SweetAlert que viene en la respuesta
             },
             error: function() {
@@ -20,6 +19,7 @@ $(document).ready(function() {
                 });
             }
         });
+        recargarTabla();
     });
 });
 
@@ -33,9 +33,7 @@ $(document).ready(function() {
             url: '../controlador/usuario.controlador.php',
             data: $(this).serialize(),
             success: function(response) {
-                // Aquí se insertan los mensajes de SweetAlert directamente desde el controlador
-                $('body').append(response); // Ejecuta el script de SweetAlert que viene en la respuesta
-            },
+                $('body').append(response); 
             error: function() {
                 Swal.fire({
                     icon: 'error',
@@ -105,6 +103,9 @@ $(".tablaAdministradores").DataTable({
         console.log(xhr); // Muestra el error en la consola
     }
 });
+function recargarTabla() {
+    table.ajax.reload(null, false);
+}
 
 
 
