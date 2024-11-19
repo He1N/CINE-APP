@@ -1,4 +1,5 @@
 
+
 <nav class="main-header navbar navbar-expand navbar-white navbar-light border-bottom">
 
   <!--=====================================
@@ -15,7 +16,6 @@
 
     <li class="nav-item d-none d-sm-inline-block">
 
-      <a class="nav-link">Hola <?php echo $admin["nombre"]; ?></a>
 
     </li>
 
@@ -33,7 +33,6 @@
 
         <i class="far fa-bell"></i>
 
-        <span class="badge badge-danger navbar-badge"><?php if($totalNotificaciones != 0){echo $totalNotificaciones;}  ?></span>
 
       </a>
 

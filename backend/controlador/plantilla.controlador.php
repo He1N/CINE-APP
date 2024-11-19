@@ -7,7 +7,7 @@ class ControladorPlantilla{
 	=============================================*/
 	public function ctrPlantilla(){
 
-		include "vista/dashboard.php";
+		include "vista/plantilla.php";
 	}	
 
 }

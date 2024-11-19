@@ -4,7 +4,7 @@ class ControladorRuta{
 
 	static public function ctrRuta(){
 
-		return "http://localhost/CINE-APP/backend/";
+		return "http://localhost/CINE-APP/";
 
 	}
 

@@ -1,111 +1,148 @@
 
-//AGREGAR ADMIN FUNCION JAVASCRIPT
-$(document).ready(function() {
-    $('#adminFormAdd').submit(function(event) {
-        event.preventDefault(); // Evita el envío tradicional del formulario
+$(".tablaUsuario").DataTable({
+	"ajax":"ajax/tablaUsuario.ajax.php",
+	"deferRender": true,
+	"retrieve": true,
+	"processing": true,
+	"language": {
 
-        $.ajax({
-            type: 'POST',
-            url: '../controlador/usuario.controlador.php',
-            data: $(this).serialize(),
-            success: function(response) {
-                // Aquí se insertan los mensajes de SweetAlert directamente desde el controlador
-                $('body').append(response); // Ejecuta el script de SweetAlert que viene en la respuesta
-            },
-            error: function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Hubo un problema al enviar el formulario.'
-                });
-            }
+		"sProcessing":     "Procesando...",
+		"sLengthMenu":     "Mostrar _MENU_ registros",
+		"sZeroRecords":    "No se encontraron resultados",
+		"sEmptyTable":     "Ningún dato disponible en esta tabla",
+		"sInfo":           "Mostrando registros del _START_ al _END_",
+		"sInfoEmpty":      "Mostrando registros del 0 al 0",
+		"sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+		"sInfoPostFix":    "",
+		"sSearch":         "Buscar:",
+		"sUrl":            "",
+		"sInfoThousands":  ",",
+		"sLoadingRecords": "Cargando...",
+		"oPaginate": {
+			"sFirst":    "Primero",
+			"sLast":     "Último",
+			"sNext":     "Siguiente",
+			"sPrevious": "Anterior"
+		},
+		"oAria": {
+			"sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+			"sSortDescending": ": Activar para ordenar la columna de manera descendente"
+		}
+
+	}
+
+});
+
+/*=============================================
+Editar Administrador
+=============================================*/
+
+$(document).on("click", ".editarAdministrador", function(){
+
+	var idAdministrador = $(this).attr("idAdministrador");
+
+	var datos = new FormData();
+  	datos.append("idAdministrador", idAdministrador);
+
+  	$.ajax({
+  		url:"ajax/usuario.ajax.php",
+  		method: "POST",
+  		data: datos,
+  		cache: false,
+		contentType: false,
+    	processData: false,
+    	dataType: "json",
+    	success:function(respuesta){ 	
+
+    		$('input[name="editarId"]').val(respuesta["id"]);
+    		$('input[name="editarNombre"]').val(respuesta["nombre"]);
+    		$('input[name="editarUsuario"]').val(respuesta["usuario"]);
+    		$('input[name="passwordActual"]').val(respuesta["password"]);
+    		
+
+    	}
+
+  	})
+
+})
+
+/*=============================================
+Eliminar Administrador
+=============================================*/
+
+$(document).on("click", ".eliminarAdministrador", function(){
+
+	var idAdministrador = $(this).attr("idAdministrador");
+
+	if(idAdministrador == 1){
+
+		swal({
+          title: "Error",
+          text: "Este administrador no se puede eliminar",
+          type: "error",
+          confirmButtonText: "¡Cerrar!"
         });
-    });
-});
 
-//EDITAR ADMIN FUNCION JAVASCRIPT
-$(document).ready(function() {
-    $('#adminFormEdit').submit(function(event) {
-        event.preventDefault(); // Evita el envío tradicional del formulario
+        return;
 
-        $.ajax({
-            type: 'POST',
-            url: '../controlador/usuario.controlador.php',
-            data: $(this).serialize(),
-            success: function(response) {
-                // Aquí se insertan los mensajes de SweetAlert directamente desde el controlador
-                $('body').append(response); // Ejecuta el script de SweetAlert que viene en la respuesta
-            },
-            error: function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Hubo un problema al enviar el formulario.'
-                });
-            }
-        });
-    });
-});
+	}
 
-//ELIMINAR ADMIN FUNCION JAVASCRIPT
-$(document).ready(function() {
-    $('#adminFormDelete').submit(function(event) {
-        event.preventDefault(); // Evita el envío tradicional del formulario
+	swal({
+	    title: '¿Está seguro de eliminar este administrador?',
+	    text: "¡Si no lo está puede cancelar la acción!",
+	    type: 'warning',
+	    showCancelButton: true,
+	    confirmButtonColor: '#3085d6',
+	    cancelButtonColor: '#d33',
+	    cancelButtonText: 'Cancelar',
+	    confirmButtonText: 'Si, eliminar administrador!'
+	  }).then(function(result){
 
-        $.ajax({
-            type: 'POST',
-            url: '../controlador/usuario.controlador.php', // Cambia a tu ruta PHP
-            data: $(this).serialize(), // Envía los datos del formulario
-            success: function(response) {
-                // Aquí se insertan los mensajes de SweetAlert directamente desde el controlador
-                $('body').append(response); // Ejecuta el script de SweetAlert que viene en la respuesta
-            },
-            error: function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Hubo un problema al enviar el formulario.'
-                });
-            }
-        });
-    });
-});
+	    if(result.value){
 
-// DATATABLE USUARIOS ADMINISTRADORES
-$(".tablaAdministradores").DataTable({
-    "ajax": "../ajax/tablaAdministradores.ajax.php",
-    "deferRender": true,
-    "retrieve": true,
-    "processing": true,
-    "language": {
-        "sProcessing": "Procesando...",
-        "sLengthMenu": "Mostrar _MENU_ registros",
-        "sZeroRecords": "No se encontraron resultados",
-        "sEmptyTable": "Ningún dato disponible en esta tabla",
-        "sInfo": "Mostrando registros del _START_ al _END_",
-        "sInfoEmpty": "Mostrando registros del 0 al 0",
-        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-        "sInfoPostFix": "",
-        "sSearch": "Buscar:",
-        "sUrl": "",
-        "sInfoThousands": ",",
-        "sLoadingRecords": "Cargando...",
-        "oPaginate": {
-            "sFirst": "Primero",
-            "sLast": "Último",
-            "sNext": "Siguiente",
-            "sPrevious": "Anterior"
-        },
-        "oAria": {
-            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-        }
-    },
-    "error": function (xhr, error, code) {
-        console.log(xhr); // Muestra el error en la consola
-    }
-});
+	    	var datos = new FormData();
+       		datos.append("idEliminar", idAdministrador);
 
+       		$.ajax({
+
+	          url:"ajax/usuario.ajax.php",
+	          method: "POST",
+	          data: datos,
+	          cache: false,
+	          contentType: false,
+	          processData: false,
+	          success:function(respuesta){
+
+	          	if(respuesta == "ok"){
+
+	          		swal({
+	                  type: "success",
+	                  title: "¡CORRECTO!",
+	                  text: "El administrador ha sido borrado correctamente",
+	                  showConfirmButton: true,
+	                  confirmButtonText: "Cerrar",
+	                  closeOnConfirm: false
+	                 }).then(function(result){
+
+	                    if(result.value){
+
+	                      window.location = "administradores";
+
+	                    }
+	                
+	                })
+
+	          	}
+
+	          }
+
+	        })  
+
+	    }
+
+	})
+
+})
 
 
 

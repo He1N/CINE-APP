@@ -1,189 +1,215 @@
 <?php
-// Incluir el modelo
-require_once '../modelo/usuario.modelo.php';
 
-class UsuarioControlador {
-    private $modelo;
+class ControladorUsuarios {
+   
+    /*=============================================
+        Iniciar Sesión
+    =============================================*/
 
-    public function __construct() {
-        // Instancia del modelo de usuario
-        $this->modelo = new UsuarioModelo();
-    }
+    public function ctrIngresoAdministradores(){
 
-    // Función para iniciar sesión
-    public function iniciarSesion($nombreUsuario, $contrasenaUsuario) {
-        $usuario = $this->modelo->obtenerUsuarioPorNombre($nombreUsuario);
+		if(isset($_POST["ingresoUsuario"])){
 
-        if ($usuario && $usuario['contrasena_usuario'] === $contrasenaUsuario) {
-            session_start();
-            $_SESSION['usuario'] = $usuario['nombre_usuario'];
-            $_SESSION['rol'] = $usuario['rol'];
-            // Redirigir al dashboard si el inicio de sesión es exitoso
-            header("Location: ../vista/dashboard.php");
-            exit();
-        } else {
-            header("Location: ../vista/index.php?error=Credenciales incorrectas");
-            // Si el login falla, devolver un mensaje de error
-            header("Location: ../vista/login.php?error=1");
-            exit();
-        }
-    }
-     // Función para crear un administrador
-    public function nuevoAdmin($nombreAdmin, $contrasenaAdmin) {
-        $usuarioAdmin = $this->modelo->registrarNuevoAdmin($nombreAdmin, $contrasenaAdmin);
+			if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["ingresoUsuario"]) &&
+			   preg_match('/^[a-zA-Z0-9]+$/', $_POST["ingresoPassword"])){
 
-        if ($usuarioAdmin) {
-            // Si el registro es exitoso, devolvemos una respuesta de éxito
-            echo "<script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Administrador creado!',
-                        text: 'El nuevo administrador se ha registrado correctamente.'
-                    });
-                  </script>";
-        } else {
-            // Si hay un error en el registro
-            echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Hubo un problema al registrar el administrador.'
-                    });
-                  </script>";
-        }
-    }
-    // Función para editar un administrador
-    public function editarAdmin($id, $nuevoNombre, $nuevaContrasena) {
-        $editarAdmin = $this->modelo->editarAdmin($id, $nuevoNombre, $nuevaContrasena); // Llamar al modelo para editar
-        if ($editarAdmin) {
-            // Si el registro es exitoso, devolvemos una respuesta de éxito
-            echo "<script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: '¡Campos editados!',
-                        text: 'Los campos se han editado correctamente.'
-                    });
-                </script>";
+			   	//$encriptarPassword = crypt($_POST["ingresoPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
 
-        } else {
-            // Si hay un error en el registro
-            echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Hubo un problema al editar el administrador.'
-                    });
-                  </script>";
-        }
-    }
-    // Función para eliminar un administrador
-    public function eliminarAdmin($id) {
-        $eliminarAdmin = $this->modelo->eliminarAdmin($id); // Llamar al modelo para eliminar
+			   	$tabla = "usuario_admin";
+			    $item = "usuario";
+			    $valor = $_POST["ingresoUsuario"];
+
+				$respuesta = ModeloUsuarios ::mdlMostrarAdministradores($tabla, $item, $valor);
+				
+				if($respuesta["usuario"] == $_POST["ingresoUsuario"] && $respuesta["password"] == $_POST["ingresoPassword"]){
+
+					if($respuesta["estado"] == 1){
+
+						$_SESSION["validarSesionBackend"] = "ok";
+				 		$_SESSION["idBackend"] = $respuesta["id"];
+
+				 		echo '<script>
+
+							window.location = "'.$_SERVER["REQUEST_URI"].'";
+
+				 		</script>';
+
+			 		}else{
+
+			 			echo "<div class='alert alert-danger mt-3 small'>ERROR: El usuario está desactivado</div>";
+
+			 		}
+
+				}else{
+
+					echo "<div class='alert alert-danger mt-3 small'>ERROR: Usuario y/o contraseña incorrectos</div>";
+				}	
+
+			}else{
+
+				echo "<div class='alert alert-danger mt-3 small'>ERROR: No se permiten caracteres especiales</div>";
+
+			}
+
+		}
+
+	}
+   
+    /*=============================================
+        Mostrar Administradores
+    =============================================*/
+
+    static public function ctrMostrarAdministradores($item, $valor){
+
+		$tabla = "usuario_admin";
+
+		$respuesta = ModeloUsuarios::mdlMostrarAdministradores($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
+    /*=============================================
+        Ingresar Administradores
+    =============================================*/
+	public function ctrRegistroAdministrador(){
+
+		if(isset($_POST["registroNombre"])){
+
+			if(preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/', $_POST["registroNombre"]) &&
+			   preg_match('/^[a-zA-Z0-9]+$/', $_POST["registroUsuario"]) &&
+			   preg_match('/^[a-zA-Z0-9]+$/', $_POST["registroPassword"])){
+
+			   	$encriptarPassword = crypt($_POST["registroPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+
+				$tabla = "usuario_admin";
+
+				$datos = array("nombre" => $_POST["registroNombre"],
+							   "usuario" =>  $_POST["registroUsuario"],
+							   "password" => $encriptarPassword,
+							   "estado" => 0);
+
+				
+				$respuesta = ModeloUsuarios::mdlRegistroAdministradores($tabla, $datos);
+				
+				if($respuesta == "ok"){
+
+					echo'<script>
+
+						swal({
+								type:"success",
+							  	title: "¡CORRECTO!",
+							  	text: "El administrador ha sido creado correctamente",
+							  	showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+							  
+						}).then(function(result){
+
+								if(result.value){   
+								    window.location = "administradores";
+								  } 
+						});
+
+					</script>';
+
+				}
+
+
+			}else{
+
+				echo "<div class='alert alert-danger mt-3 small'>ERROR: No se permiten caracteres especiales</div>";
+			}
+
+		}
+
+
+	}
     
-        if ($eliminarAdmin) {
-            echo "<script>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'elimi editados!',
-                        text: 'Los campos se han editado correctamente.'
-                    });
-                </script>";
-        } else {
-            echo "<script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Hubo un problema al editar el administrador.'
-                    });
-                  </script>";
-        }
-    }
+    /*=============================================
+	Editar administrador
+	=============================================*/
+
+	public function ctrEditarAdministrador(){
+
+		if(isset($_POST["editarNombre"])){
+
+			if(preg_match('/^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/', $_POST["editarNombre"]) &&
+			   preg_match('/^[a-zA-Z0-9]+$/', $_POST["editarUsuario"])){
+
+			   	if($_POST["editarPassword"] != ""){
+
+			   		if(preg_match('/^[a-zA-Z0-9]+$/', $_POST["editarPassword"])){
+
+			   			$password = crypt($_POST["editarPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');  			
+
+			   		}else{
+
+			   			echo "<div class='alert alert-danger mt-3 small'>ERROR: No se permiten caracteres especiales</div>";
+
+			   			return;
+
+			   		}
+
+			   	}else{
+
+			   		$password = $_POST["passwordActual"];
+			   	}
+
+				$tabla = "usuario_admin";
+
+				$datos = array("id"=> $_POST["editarId"],
+							   "nombre" => $_POST["editarNombre"],
+							   "usuario" =>  $_POST["editarUsuario"],
+							   "password" => $password);
+
+				
+				$respuesta = ModeloUsuarios::mdlEditarAdministrador($tabla, $datos);
+				
+				if($respuesta == "ok"){
+
+					echo'<script>
+
+						swal({
+								type:"success",
+							  	title: "¡CORRECTO!",
+							  	text: "El administrador ha sido editado correctamente",
+							  	showConfirmButton: true,
+								confirmButtonText: "Cerrar"
+							  
+						}).then(function(result){
+
+								if(result.value){   
+								    window.location = "administradores";
+								  } 
+						});
+
+					</script>';
+
+				}
+
+
+			}else{
+
+				echo "<div class='alert alert-danger mt-3 small'>ERROR: No se permiten caracteres especiales</div>";
+			}
+
+		}
+
+	}
+    /*=============================================
+	Eliminar Administrador
+	=============================================*/
+
+	static public function ctrEliminarAdministrador($id){
+
+		$tabla = "usuario_admin";
+
+		$respuesta = ModeloUsuarios::mdlEliminarAdministrador($tabla, $id);
+
+		return $respuesta;
+
+	}
     
-
-    static public function mostrarTablaAdmin() {
-        // Obtener los datos desde la base de datos
-		$respuesta = UsuarioModelo::verTablaAdmin();
-        return $respuesta;
-
-    }
-    
-    
-}
-
-// Procesar el envío del formulario LOGIN.PHP
-if (isset($_POST['iniciarSesion'])) {
-    // Capturar los valores del formulario
-    $nombreUsuario = $_POST['nombreUsuario'] ?? null;
-    $contrasenaUsuario = $_POST['contrasenaUsuario'] ?? null;
-
-    if ($nombreUsuario && $contrasenaUsuario) {
-        // Crear instancia del controlador
-        $controlador = new UsuarioControlador();
-
-        // Llamar la función de iniciar sesión
-        $controlador->iniciarSesion($nombreUsuario, $contrasenaUsuario);
-    } else {
-        // Redirigir si faltan datos
-        header("Location: ../vista/login.php?error=campos_vacios");
-        exit();
-    }
-}
-// Procesar el envío del formulario del nuevo administrador
-
-if (isset($_POST['nombreAdmin']) && isset($_POST['contrasenaAdmin'])) {
-    $nombreAdmin = $_POST['nombreAdmin'];
-    $contrasenaAdmin = $_POST['contrasenaAdmin'];
-
-    if ($nombreAdmin && $contrasenaAdmin) {
-        $controlador = new UsuarioControlador();
-        $controlador->nuevoAdmin($nombreAdmin, $contrasenaAdmin);
-    } else {
-        echo "<script>
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campos incompletos',
-                    text: 'Por favor, completa todos los campos.'
-                });
-              </script>";
-    }
-}
-// Procesar el envío del formulario de editar administrador
-
-if(isset($_POST['nuevoNombre']) && isset($_POST['nuevaContrasena'])){
-    $id = $_POST['id'];
-    $nuevoNombre = $_POST['nuevoNombre'];
-    $nuevaContrasena = $_POST['nuevaContrasena'];
-
-    if($nuevoNombre && $nuevaContrasena) {
-        $controlador = new UsuarioControlador();
-        $controlador->editarAdmin($id,$nuevoNombre,$nuevaContrasena);
-    }else {
-        echo "<script>
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campos incompletos',
-                    text: 'Por favor, completa todos los campos.'
-                });
-              </script>";
-    }
-}
-// Procesar el envío del formulario de eliminar administrador
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminarAdmin'])) {
-    $id = $_POST['id'];
-
-    if ($id) {
-        $controlador = new UsuarioControlador();
-        $controlador->eliminarAdmin($id);
-    } else {
-        echo "<script>
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Campos incompletos',
-                    text: 'Por favor, completa todos los campos.'
-                });
-              </script>";
-    }
 }
 
 ?>

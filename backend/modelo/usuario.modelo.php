@@ -1,73 +1,151 @@
 <?php
-    require_once "conexion.php";
 
-    class UsuarioModelo {
-    private $conexion;
+require_once "conexion.php";
 
-    public function __construct() {
-        // Crear una nueva conexión utilizando el método conectar() de la clase Conexion
-        $this->conexion = Conexion::conectar();
-    }
+class ModeloUsuarios {
+    
+    /*=============================================
+	Mostrar Administradores
+	=============================================*/
 
-    public function obtenerUsuarioPorNombre($nombreUsuario) {
-        // Usar la instancia de PDO para preparar la consulta
-        $query = $this->conexion->prepare("SELECT * FROM usuario_admin WHERE nombre_usuario = :nombreUsuario");
-        $query->bindParam(':nombreUsuario', $nombreUsuario);
-        $query->execute();
-        return $query->fetch(PDO::FETCH_ASSOC);
-    }
-    //AGREGAR NUEVO ADMIN
-    public function registrarNuevoAdmin($nombreAdmin, $contrasenaAdmin) {
-        $rolAdmin = 'admin';
-    
-        // Verificar si ya existe un usuario con el mismo nombre
-        $verificar_admin = $this->conexion->prepare("SELECT * FROM usuario_admin WHERE nombre_usuario = :nombreAdmin");
-        $verificar_admin->bindParam(':nombreAdmin', $nombreAdmin);
-        $verificar_admin->execute();
-    
-        // Usamos fetch() para comprobar si hay un resultado
-        if($verificar_admin->fetch()) {
-            return false; // Retornar false si el usuario ya existe
-        } else {
-    
-            // Insertar el nuevo administrador
-            $query = $this->conexion->prepare("INSERT INTO usuario_admin (nombre_usuario, contrasena_usuario, rol) VALUES (:nombreAdmin, :contrasenaAdmin, :rolAdmin)");
-            
-            $query->bindParam(':nombreAdmin', $nombreAdmin);
-            $query->bindParam(':contrasenaAdmin', $contrasenaAdmin); // Guardar la contraseña encriptada
-            $query->bindParam(':rolAdmin', $rolAdmin);
-    
-            return $query->execute(); // Retornar true si la inserción fue exitosa
-        }
-    }
-    //EDITAR ADMINISTRADOR
-    public function editarAdmin($id, $nombreAdmin, $contrasenaAdmin) {
-        $query = $this->conexion->prepare("UPDATE usuario_admin SET nombre_usuario = :nombreAdmin, contrasena_usuario = :contrasenaAdmin WHERE id = :id");
-        $query->bindParam(':id', $id);
-        $query->bindParam(':nombreAdmin', $nombreAdmin);
-        $query->bindParam(':contrasenaAdmin', $contrasenaAdmin);
-        
-        return $query->execute(); // Retorna true si la actualización fue exitosa
-    }
-    //ELIMINAR ADMINISTRADOR
-    public function eliminarAdmin($id) {
-        $query = $this->conexion->prepare("DELETE FROM usuario_admin WHERE id = :id");
-        $query->bindParam(':id', $id);
-        
-        return $query->execute(); // Retorna true si la eliminación fue exitosa
-    }
-    //VER TABLA ADMINISTRADORES
-    static public function verTablaAdmin() {
-        
-        $query = Conexion::conectar()->prepare("SELECT * FROM usuario_admin");
+    static public function mdlMostrarAdministradores($tabla, $item, $valor){
 
-		$query -> execute();
+		if($item != null && $valor != null){
 
-		return $query -> fetchAll();
-        
-       
-    }
-    
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE $item = :$item");
+
+			$stmt->bindParam(":".$item, $valor, PDO::PARAM_STR);
+
+			$stmt -> execute();
+
+			return $stmt -> fetch();
+
+		}else{
+
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+
+			$stmt -> execute();
+
+			return $stmt -> fetchAll();
+
+		}
+
+		$stmt-> close();
+
+		$stmt = null;
+
+	}
+    /*=============================================
+	Crear Administrador
+	=============================================*/
+	static public function mdlRegistroAdministradores($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, usuario, password, estado) VALUES (:nombre, :usuario, :password, :estado)");
+
+		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
+		$stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
+
+		if($stmt->execute()){
+
+			return "ok";
+
+		}else{
+
+			echo "\nPDO::errorInfo():\n";
+    		print_r(Conexion::conectar()->errorInfo());
+		
+		}
+
+		$stmt->close();
+		$stmt = null;
+
+	}
+    /*=============================================
+	Editar Administrador
+	=============================================*/
+
+	static public function mdlEditarAdministrador($tabla, $datos){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre = :nombre, usuario = :usuario, password = :password WHERE id = :id");
+
+		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datos["usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
+		$stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+
+		}else{
+
+			echo "\nPDO::errorInfo():\n";
+    		print_r(Conexion::conectar()->errorInfo());
+
+		}
+
+		$stmt-> close();
+
+		$stmt = null;
+
+	}
+	/*=============================================
+	Actualizar administrador
+	=============================================*/
+
+	static public function mdlActualizarAdministrador($tabla, $item1, $valor1, $item2, $valor2){
+
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET $item2 = :$item2 WHERE $item1 = :$item1");
+
+		$stmt -> bindParam(":".$item2, $valor2, PDO::PARAM_STR);
+		$stmt -> bindParam(":".$item1, $valor1, PDO::PARAM_STR);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			echo "\nPDO::errorInfo():\n";
+    		print_r(Conexion::conectar()->errorInfo());
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
+	/*=============================================
+	Eliminar Administrador
+	=============================================*/
+
+	static public function mdlEliminarAdministrador($tabla, $id){
+
+		$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+
+		$stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+
+		if($stmt -> execute()){
+
+			return "ok";
+		
+		}else{
+
+			echo "\nPDO::errorInfo():\n";
+    		print_r(Conexion::conectar()->errorInfo());
+
+		}
+
+		$stmt -> close();
+
+		$stmt = null;
+
+	}
+
 }
 ?>
 
