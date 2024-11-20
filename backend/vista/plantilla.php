@@ -152,24 +152,26 @@ include "paginas/login.php";
 		Navagación de páginas
 		=============================================*/
 
-		include "paginas/usuarios.php";
+		include "paginas/peliculas.php";
 
-		if (isset($_GET["pagina"])) {
-		
-			if ($_GET["pagina"] == "inicio" || $_GET["pagina"] == "usuarios" || $_GET["pagina"] == "salir") {
-				
+		/*
+			if (isset($_GET["pagina"])) {
+			
+				if ($_GET["pagina"] == "inicio" || $_GET["pagina"] == "usuarios" || $_GET["pagina"] == "peliculas"|| $_GET["pagina"] == "salir") {
+					
 
-				include "paginas/".$_GET["pagina"].".php";
+					include "paginas/".$_GET["pagina"].".php";
 
-			}else {
-				include "paginas/error404.php";
-			}
-		
-		}else{
+				}else {
+					include "paginas/error404.php";
+				}
+			
+			}else{
 
-			//include "paginas/inicio.php";
+				//include "paginas/inicio.php";
 
-		} 
+			} 
+		*/
 
 		include "paginas/modulos/footer.php";
 
@@ -180,6 +182,8 @@ include "paginas/login.php";
 	</div>
 
 	<script src="vista/js/usuario.js"></script>
+	<script src="vista/js/peliculas.js"></script>
+
 	
 </body>
 
