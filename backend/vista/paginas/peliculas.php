@@ -48,7 +48,7 @@
 
             <div class="card-header pl-2 pl-sm-3">
           
-              <a href="habitaciones" class="btn btn-primary btn-sm">Agregar nueva película</a>
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#agregarPelicula">Agregar nueva película</button>
 
               <div class="card-tools">
                 
@@ -215,8 +215,6 @@
 
 </div>
 
-
-
       </div>
 
     </div>
@@ -224,4 +222,91 @@
   </section>
   <!-- /.content -->
 
+</div>
+<!--=====================================
+Modal Agregar Pelicula
+======================================-->
+<div class="modal fade" id="agregarPelicula" tabindex="-1" role="dialog" aria-labelledby="agregarPeliculaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="agregarPeliculaLabel">Agregar Nueva Película</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="row">
+            <!-- Nombre -->
+            <div class="col-md-6 mb-3">
+              <label for="nombre">Nombre:</label>
+              <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de la película" required>
+            </div>
+            <!-- Director -->
+            <div class="col-md-6 mb-3">
+              <label for="director">Director:</label>
+              <input type="text" class="form-control" id="director" name="director" placeholder="Director de la película" required>
+            </div>
+            <!-- Reparto -->
+            <div class="col-md-12 mb-3">
+              <label for="reparto">Reparto:</label>
+              <input type="text" class="form-control" id="reparto" name="reparto" placeholder="Actores principales (separados por comas)" required>
+            </div>
+            <!-- Galería -->
+            <div class="col-md-12 mb-3">
+              <label for="galeria">Imagen (URL):</label>
+              <input type="text" class="form-control" id="galeria" name="galeria" placeholder="URL de la imagen promocional" required>
+            </div>
+            <!-- Video -->
+            <div class="col-md-12 mb-3">
+              <label for="video">Tráiler (YouTube):</label>
+              <input type="text" class="form-control" id="video" name="video" placeholder="Enlace al tráiler en YouTube">
+            </div>
+            <!-- Duración -->
+            <div class="col-md-6 mb-3">
+              <label for="duracion">Duración (min):</label>
+              <input type="number" class="form-control" id="duracion" name="duracion" placeholder="Duración en minutos" required>
+            </div>
+            <!-- Fecha de estreno -->
+            <div class="col-md-6 mb-3">
+              <label for="fecha_estreno">Fecha de Estreno:</label>
+              <input type="date" class="form-control" id="fecha_estreno" name="fecha_estreno" required>
+            </div>
+            <!-- Clasificación -->
+            <div class="col-md-6 mb-3">
+              <label for="clasificacion">Clasificación:</label>
+              <select class="form-control" id="clasificacion" name="clasificacion" required>
+                <option value="G">G</option>
+                <option value="PG">PG</option>
+                <option value="PG-13">PG-13</option>
+                <option value="R">R</option>
+                <option value="NC-17">NC-17</option>
+              </select>
+            </div>
+            <!-- Género -->
+            <div class="col-md-6 mb-3">
+              <label for="genero">Género:</label>
+              <input type="text" class="form-control" id="genero" name="genero" placeholder="Género de la película (separado por comas)" required>
+            </div>
+            <!-- Descripción -->
+            <div class="col-md-12 mb-3">
+              <label for="descripcion">Descripción:</label>
+              <textarea class="form-control" id="descripcion" name="descripcion" rows="3" placeholder="Sinopsis de la película" required></textarea>
+            </div>
+          </div>
+        </div>
+        <?php 
+
+             $registroPelicula = new ControladorPeliculas();
+             $registroPelicula -> ctrAgregarPelicula();
+
+        ?>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar Película</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
