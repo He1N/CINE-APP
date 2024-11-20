@@ -72,29 +72,6 @@
                     </thead>
 
                     <tbody>
-                      
-                      <!--  <tr>
-                    
-                        <td>1</td>
-                        <td>Administrador</td>
-                        <td><button class="btn btn-info btn-sm">Activo</button></td>
-                        <td>
-
-                          <div class='btn-group'>
-                          
-                            <button class="btn btn-warning btn-sm">
-                              <i class="fas fa-pencil-alt text-white"></i>
-                            </button>  
-
-                            <button class="btn btn-danger btn-sm">
-                              <i class="fas fa-trash-alt"></i>
-                            </button> 
-
-                          </div> 
-
-                        </td>
-
-                      </tr> -->
 
 
                     </tbody>
@@ -108,10 +85,71 @@
 
   </section>
   <div class="col-sm-6">
-
           <h2>Usuarios de la web</h2>
+  </div>
+
+   <!-- Main content -->
+ <section class="content">
+
+<div class="card card-primary card-outline">
+
+  <div class="card-body">
+
+    <table class="table table-bordered table-striped dt-responsive tablaUsuarioRegistrado" width="100%">
+    
+      <thead>
+
+        <tr>
+
+          <th style="width:10px">#</th>
+          <th>Foto</th> 
+          <th>Nombre</th>
+          <th>Contraseña</th>
+          <th>Email</th>
+          <th>Tipo de Usuario</th> 
+          <th>DNI</th>     
+          <th>Acciones</th>
+        </tr>   
+
+      </thead>
+
+      <tbody>
+
+      <!--   <tr>
+          
+          <td>1</td>
+
+          <td>
+            <img src="vistas/img/usuarios/3/279.png" class="rounded-circle" width="50px">
+          </td> 
+          
+          <td>
+            Juan Fernando Urrego
+          </td> 
+
+          <td>
+            correotutorialesatualcance@gmail.com
+          </td>            
+
+          <td>
+            3
+          </td> 
+
+          <td>
+            1
+          </td> 
+
+        </tr>  -->
+
+      </tbody>
+
+    </table>
 
   </div>
+
+</div>
+<!-- /.card -->
+</section>
 </div>
 
     

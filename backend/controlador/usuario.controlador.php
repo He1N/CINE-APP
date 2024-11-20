@@ -69,6 +69,20 @@ class ControladorUsuarios {
 
 	}
 
+	/*=============================================
+        Mostrar Usuarios Registrados
+    =============================================*/
+	
+	static public function ctrMostrarUsuariosRegistrados($item, $valor){
+
+		$tabla = "usuario_registrado";
+
+		$respuesta = ModeloUsuarios::mdlMostrarUsuariosRegistrados($tabla, $item, $valor);
+
+		return $respuesta;
+
+	}
+
     /*=============================================
         Ingresar Administradores
     =============================================*/
