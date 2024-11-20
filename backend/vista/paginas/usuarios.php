@@ -27,7 +27,11 @@
       </div>
 
     </div><!-- /.container-fluid -->
+    <div class="col-sm-6">
 
+          <h2>Administradores</h2>
+
+    </div>
   </section>
    <!-- Main content -->
    <section class="content">
@@ -103,7 +107,13 @@
     </div>
 
   </section>
+  <div class="col-sm-6">
+
+          <h2>Usuarios de la web</h2>
+
+  </div>
 </div>
+
     
 <!--=====================================
 Modal Crear Administrador
