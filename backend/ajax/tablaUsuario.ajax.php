@@ -31,7 +31,12 @@ class TablaUsuario{
 
 		foreach ($respuesta as $key => $value) {
 
-		$acciones = "<div class='btn-group'><button class='btn btn-warning btn-sm editarAdministrador' data-toggle='modal' data-target='#editarAdministrador' idAdministrador='".$value["id"]."'><i class='fas fa-pencil-alt text-white'></i></button><button class='btn btn-danger btn-sm eliminarAdministrador' idAdministrador='".$value["id"]."'><i class='fas fa-trash-alt'></i></button></div>";
+		$acciones = "<div class='btn-group'>
+						<button class='btn btn-warning btn-sm editarAdministrador' data-toggle='modal' data-target='#editarAdministrador' idAdministrador='".$value["id"]."'>
+							<i class='fas fa-pencil-alt text-white'></i></button>
+						<button class='btn btn-danger btn-sm eliminarAdministrador' idAdministrador='".$value["id"]."'>
+							<i class='fas fa-trash-alt'></i></button>
+					</div>";
 		$datosJson .='[
 				      "'.($key+1).'",
                       "'.$value["foto"].'",

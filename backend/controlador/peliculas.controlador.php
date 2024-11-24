@@ -86,6 +86,87 @@ class ControladorPeliculas{
         }
 
 	}
+    /*=============================================
+    EDITAR PELICULA
+    =============================================*/
+    static public function ctrEditarPelicula() {
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPelicula"])) {
+
+            // Validar que todos los campos requeridos estén presentes
+            if (
+                isset($_POST["nombre"]) &&
+                isset($_POST["director"]) &&
+                isset($_POST["reparto"]) &&
+                isset($_POST["galeria"]) &&
+                isset($_POST["video"]) &&
+                isset($_POST["duracion"]) &&
+                isset($_POST["fecha_estreno"]) &&
+                isset($_POST["clasificacion"]) &&
+                isset($_POST["genero"]) &&
+                isset($_POST["descripcion"])
+            ) {
+                // Preparar los datos para enviarlos al modelo
+                $tabla = "pelicula";
+                $datos = [
+                    "id_p" => $_POST["idPelicula"], // ID de la película
+                    "nombre" => $_POST["nombre"],
+                    "director" => $_POST["director"],
+                    "reparto" => $_POST["reparto"],
+                    "galeria" => $_POST["galeria"],
+                    "video" => $_POST["video"],
+                    "duracion" => $_POST["duracion"],
+                    "fecha_estreno" => $_POST["fecha_estreno"],
+                    "clasificacion" => $_POST["clasificacion"],
+                    "genero" => $_POST["genero"],
+                    "descripcion" => $_POST["descripcion"]
+                ];
+
+                // Llamar al modelo para actualizar los datos
+                $respuesta = ModeloPeliculas::mdlEditarPelicula($tabla, $datos);
+
+                // Manejar la respuesta del modelo
+                if ($respuesta == "ok") {
+                    echo '<script>
+                        swal({
+                            type: "success",
+                            title: "¡CORRECTO!",
+                            text: "La película fue editada correctamente.",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then(function(result) {
+                            if (result.value) {   
+                                window.location = "index.php?pagina=peliculas";
+                            }
+                        });
+                    </script>';
+                } else {
+                    echo "<div class='alert alert-danger mt-3 small'>ERROR: No se pudieron actualizar los datos</div>";
+                }
+            } else {
+                echo '<script>
+                        alert("Por favor, llena todos los campos.");
+                      </script>';
+            }
+        }
+    }
+        /*=============================================
+    OBTENER DATOS DE UNA PELICULA
+    =============================================*/
+    static public function ctrObtenerPelicula() {
+        if (isset($_POST["id"])) {
+            $tabla = "pelicula";
+            $id = $_POST["id"];
+
+            // Llamar al modelo para obtener los datos
+            $respuesta = ModeloPeliculas::mdlObtenerPelicula($tabla, $id);
+
+            // Devolver la respuesta en formato JSON
+            echo json_encode($respuesta);
+        }
+    }
+
+
 }
 
 ?>

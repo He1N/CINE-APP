@@ -31,3 +31,32 @@ $(".tablaPeliculas").DataTable({
      }
   
   })
+
+  $(document).on('click', '.btnEditarPelicula', function () {
+    let idPelicula = $(this).data('id'); // Obtener el ID de la película
+
+    // Solicitud Ajax para obtener los datos de la película
+    $.ajax({
+        url: 'ajax/peliculas.ajax.php', // Ruta al archivo recién creado
+        method: 'POST',
+        data: { id: idPelicula },
+        dataType: 'json',
+        success: function (respuesta) {
+            // Precargar los datos en el formulario del modal
+            $('#editarNombre').val(respuesta.nombre);
+            $('#editarDirector').val(respuesta.director);
+            $('#editarReparto').val(respuesta.reparto);
+            $('#editarGaleria').val(respuesta.galeria);
+            $('#editarVideo').val(respuesta.video);
+            $('#editarDuracion').val(respuesta.duracion);
+            $('#editarFechaEstreno').val(respuesta.fecha_estreno);
+            $('#editarClasificacion').val(respuesta.clasificacion);
+            $('#editarGenero').val(respuesta.genero);
+            $('#editarDescripcion').val(respuesta.descripcion);
+            $('#idPelicula').val(respuesta.id_p); // Campo oculto para el ID
+        },
+        error: function () {
+            alert('Hubo un error al intentar obtener los datos de la película.');
+        }
+    });
+});
