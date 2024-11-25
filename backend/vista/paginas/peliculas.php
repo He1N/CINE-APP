@@ -71,7 +71,7 @@
 
                     <th style="width:10px">#</th> 
                     <th>Nombre de la Película</th>
-                    <th style="width:10px">Agregar</th>          
+                    <th style="width:10px">Acciones</th>          
                     
                   </tr>   
 
@@ -87,7 +87,34 @@
             </div>
 
            </div>
-          
+            <!-- Card para gestionar Actores -->
+<div class="card card-secondary card-outline mt-4">
+    <!-- header-card -->
+    <div class="card-header bg-secondary text-white">
+        <h3 class="card-title">Gestión de Actores</h3>
+        <button class="btn btn-primary btn-sm float-right" data-toggle="modal" data-target="#modalAgregarActor">
+            <i class="fas fa-plus"></i> Agregar Actor
+        </button>
+    </div>
+
+    <!-- body-card -->
+    <div class="card-body">
+        <table class="table table-bordered table-striped dt-responsive tablaActores" width="100%">
+            <thead>
+                <tr>
+                    <th style="width: 10px">#</th>
+                    <th>Foto</th>
+                    <th>Nombre</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Este contenido será dinámico -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
         </div>
 
         <!--=====================================
@@ -114,16 +141,17 @@
 
         <div class="card card-primary card-outline">
         
-        <!-- header-card -->
         <div class="card-header bg-primary text-white">
             <h3 class="card-title">Detalles de la Película</h3>
-            <!-- Botón de editar -->
             <?php if ($pelicula): ?>
-                <button class="btn btn-warning btn-sm float-right" id="btnEditarPelicula" data-id="<?php echo $pelicula['id_p']; ?>" data-toggle="modal" data-target="#modalEditarPelicula">
+                <button class="btn btn-warning btn-sm float-right" id="btnEditarPelicula" 
+                        data-id="<?php echo $pelicula['id_p']; ?>" 
+                        data-toggle="modal" data-target="#modalEditarPelicula">
                     <i class="fas fa-edit"></i> Editar
                 </button>
             <?php endif; ?>
         </div>
+
 
         <!-- body-card -->
         <div class="card-body">
@@ -219,6 +247,7 @@
 </div>
 
 </div>
+
 
       </div>
 
@@ -332,6 +361,8 @@ Modal Editar Pelicula
             </div>
             <form id="formEditarPelicula" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
+                <input type="hidden" name="editarId">
+
                     <div class="row">
                         <!-- Nombre -->
                         <div class="col-md-6 mb-3">
@@ -345,7 +376,7 @@ Modal Editar Pelicula
                         </div>
                         <!-- Reparto -->
                         <div class="col-md-12 mb-3">
-                            <label for="editarReparto">Reparto:</label>
+                            <label for="editarReparto">Reparto (Separado por Comas):</label>
                             <input type="text" class="form-control" id="editarReparto" name="reparto" required>
                         </div>
                         <!-- Galería -->
@@ -397,7 +428,6 @@ Modal Editar Pelicula
                 ?>
 
                 <div class="modal-footer">
-                    <input type="hidden" id="idPelicula" name="idPelicula">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </div>

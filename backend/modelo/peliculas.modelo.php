@@ -41,7 +41,6 @@ class ModeloPeliculas{
 
     static public function mdlAgregarPelicula($tabla, $datos) {
 
-        try {
             $stmt = Conexion::conectar()->prepare(
                 "INSERT INTO $tabla (nombre, director, reparto, galeria, video, duracion, fecha_estreno, clasificacion, genero, descripcion) 
                  VALUES (:nombre, :director, :reparto, :galeria, :video, :duracion, :fecha_estreno, :clasificacion, :genero, :descripcion)"
@@ -66,34 +65,33 @@ class ModeloPeliculas{
                 return "error";
             }
 
-        } catch (Exception $e) {
-            // Manejar errores
-            return "error: " . $e->getMessage();
-        }
+        $stmt->close();
 
         $stmt = null;
     }
-    /*=============================================
-    EDITAR PELICULA
-    =============================================*/
-    static public function mdlEditarPelicula($tabla, $datos) {
+    public static function mdlObtenerPelicula($tabla, $id_p) {
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_p = :id_p");
+        $stmt->bindParam(":id_p", $id_p, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 
+    public static function mdlEditarPelicula($tabla, $datos) {
         $stmt = Conexion::conectar()->prepare(
-            "UPDATE $tabla 
-            SET nombre = :nombre, 
-                director = :director, 
-                reparto = :reparto, 
-                galeria = :galeria, 
-                video = :video, 
-                duracion = :duracion, 
-                fecha_estreno = :fecha_estreno, 
-                clasificacion = :clasificacion, 
-                genero = :genero, 
+            "UPDATE $tabla SET 
+                nombre = :nombre,
+                director = :director,
+                reparto = :reparto,
+                galeria = :galeria,
+                video = :video,
+                duracion = :duracion,
+                fecha_estreno = :fecha_estreno,
+                clasificacion = :clasificacion,
+                genero = :genero,
                 descripcion = :descripcion
-            WHERE id_p = :id_p"
+            WHERE id_p = :id"
         );
-
-        $stmt->bindParam(":id_p", $datos["id_p"], PDO::PARAM_INT);
+    
         $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
         $stmt->bindParam(":director", $datos["director"], PDO::PARAM_STR);
         $stmt->bindParam(":reparto", $datos["reparto"], PDO::PARAM_STR);
@@ -104,6 +102,43 @@ class ModeloPeliculas{
         $stmt->bindParam(":clasificacion", $datos["clasificacion"], PDO::PARAM_STR);
         $stmt->bindParam(":genero", $datos["genero"], PDO::PARAM_STR);
         $stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
+        $stmt->bindParam(":id", $datos["id"], PDO::PARAM_INT);
+    
+        
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+    
+        $stmt->close();
+        $stmt = null;
+    }
+    
+    
+    
+    
+}
+class ModeloActores {
+
+    /*=============================================
+    MOSTRAR ACTORES
+    =============================================*/
+    static public function mdlMostrarActores($tabla) {
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /*=============================================
+    AGREGAR ACTOR
+    =============================================*/
+    static public function mdlAgregarActor($tabla, $datos) {
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (nombre, foto) VALUES (:nombre, :foto)");
+
+        $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+        $stmt->bindParam(":foto", $datos["foto"], PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             return "ok";
@@ -114,20 +149,6 @@ class ModeloPeliculas{
         $stmt->close();
         $stmt = null;
     }
-    /*=============================================
-    OBTENER DATOS DE UNA PELICULA
-    =============================================*/
-    static public function mdlObtenerPelicula($tabla, $id) {
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_p = :id_p");
-        $stmt->bindParam(":id_p", $id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $stmt->close();
-        $stmt = null;
-    }
-
 }
 
 

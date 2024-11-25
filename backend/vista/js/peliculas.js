@@ -32,17 +32,17 @@ $(".tablaPeliculas").DataTable({
   
   })
 
-  $(document).on('click', '.btnEditarPelicula', function () {
-    let idPelicula = $(this).data('id'); // Obtener el ID de la película
+  $(document).on('click', '#btnEditarPelicula', function () {
+    var idPelicula = $(this).data('id'); // Obtener el ID de la película desde data-id
 
-    // Solicitud Ajax para obtener los datos de la película
+    // Petición AJAX para obtener los datos de la película
     $.ajax({
-        url: 'ajax/peliculas.ajax.php', // Ruta al archivo recién creado
+        url: 'ajax/peliculas.ajax.php',
         method: 'POST',
-        data: { id: idPelicula },
+        data: { idPelicula: idPelicula },
         dataType: 'json',
         success: function (respuesta) {
-            // Precargar los datos en el formulario del modal
+            $('#editarId').val(respuesta.id_p); // Cambiar 'id' por 'id_p'
             $('#editarNombre').val(respuesta.nombre);
             $('#editarDirector').val(respuesta.director);
             $('#editarReparto').val(respuesta.reparto);
@@ -53,10 +53,37 @@ $(".tablaPeliculas").DataTable({
             $('#editarClasificacion').val(respuesta.clasificacion);
             $('#editarGenero').val(respuesta.genero);
             $('#editarDescripcion').val(respuesta.descripcion);
-            $('#idPelicula').val(respuesta.id_p); // Campo oculto para el ID
+    
+            $('#modalEditarPelicula').modal('show');
         },
-        error: function () {
-            alert('Hubo un error al intentar obtener los datos de la película.');
+        error: function (error) {
+            console.error("Error al obtener datos:", error);
         }
+    });
+    
+});
+
+
+
+
+$(document).ready(function () {
+    $(".tablaActores").DataTable({
+        ajax: "ajax/actores.ajax.php",
+        columns: [
+            { data: "id" },
+            {
+                data: "foto",
+                render: function (data) {
+                    return `<img src="${data}" class="img-thumbnail" style="width: 50px; height: 50px;">`;
+                },
+            },
+            { data: "nombre" },
+            {
+                data: "id",
+                render: function (data) {
+                    return `<button class="btn btn-danger btnEliminarActor" data-id="${data}"><i class="fas fa-trash"></i></button>`;
+                },
+            },
+        ],
     });
 });

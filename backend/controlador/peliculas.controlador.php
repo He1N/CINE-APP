@@ -86,83 +86,92 @@ class ControladorPeliculas{
         }
 
 	}
+    // Método para obtener una película
+    public static function ctrObtenerPelicula($id) {
+        $tabla = "pelicula";
+        return ModeloPeliculas::mdlObtenerPelicula($tabla, $id);
+    }
+
+    public function ctrEditarPelicula() {
+        if (isset($_POST["editarId"])) { // Asegúrate de que se envía el ID desde el formulario
+            $tabla = "pelicula";
+            $datos = array(
+                "id" => $_POST["editarId"], // El ID de la película que se está editando
+                "nombre" => $_POST["nombre"],
+                "director" => $_POST["director"],
+                "reparto" => $_POST["reparto"],
+                "galeria" => $_POST["galeria"],
+                "video" => $_POST["video"],
+                "duracion" => $_POST["duracion"],
+                "fecha_estreno" => $_POST["fecha_estreno"],
+                "clasificacion" => $_POST["clasificacion"],
+                "genero" => $_POST["genero"],
+                "descripcion" => $_POST["descripcion"]
+            );
+    
+            // Llamar al modelo para actualizar los datos
+            $respuesta = ModeloPeliculas::mdlEditarPelicula($tabla, $datos);
+    
+            if ($respuesta == "ok") {
+                echo '<script>
+                    swal({
+                        type: "success",
+                        title: "Pelicula editada correctamente!",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar"
+                    }).then((result) => {
+                        if (result.value) {
+                            window.location = "";
+                        }
+                    });
+                </script>';
+            } else {
+                echo "<div class='alert alert-danger mt-3 small'>ERROR: No se pudo editar la pelicula</div>";
+            }
+        }
+    }
+    
+    
     /*=============================================
-    EDITAR PELICULA
+        MOSTRAR ACTORES
+        =============================================*/
+        static public function ctrMostrarActores() {
+            $tabla = "actor";
+            return ModeloActores::mdlMostrarActores($tabla);
+        }
+
+
+    /*=============================================
+    AGREGAR ACTOR
     =============================================*/
-    static public function ctrEditarPelicula() {
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["idPelicula"])) {
-
-            // Validar que todos los campos requeridos estén presentes
-            if (
-                isset($_POST["nombre"]) &&
-                isset($_POST["director"]) &&
-                isset($_POST["reparto"]) &&
-                isset($_POST["galeria"]) &&
-                isset($_POST["video"]) &&
-                isset($_POST["duracion"]) &&
-                isset($_POST["fecha_estreno"]) &&
-                isset($_POST["clasificacion"]) &&
-                isset($_POST["genero"]) &&
-                isset($_POST["descripcion"])
-            ) {
-                // Preparar los datos para enviarlos al modelo
-                $tabla = "pelicula";
+    static public function ctrAgregarActor() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (isset($_POST["nombreActor"]) && isset($_POST["fotoActor"])) {
+                $tabla = "actor";
                 $datos = [
-                    "id_p" => $_POST["idPelicula"], // ID de la película
-                    "nombre" => $_POST["nombre"],
-                    "director" => $_POST["director"],
-                    "reparto" => $_POST["reparto"],
-                    "galeria" => $_POST["galeria"],
-                    "video" => $_POST["video"],
-                    "duracion" => $_POST["duracion"],
-                    "fecha_estreno" => $_POST["fecha_estreno"],
-                    "clasificacion" => $_POST["clasificacion"],
-                    "genero" => $_POST["genero"],
-                    "descripcion" => $_POST["descripcion"]
+                    "nombre" => $_POST["nombreActor"],
+                    "foto" => $_POST["fotoActor"]
                 ];
 
-                // Llamar al modelo para actualizar los datos
-                $respuesta = ModeloPeliculas::mdlEditarPelicula($tabla, $datos);
+                $respuesta = ModeloActores::mdlAgregarActor($tabla, $datos);
 
-                // Manejar la respuesta del modelo
                 if ($respuesta == "ok") {
                     echo '<script>
                         swal({
                             type: "success",
-                            title: "¡CORRECTO!",
-                            text: "La película fue editada correctamente.",
+                            title: "¡Actor agregado correctamente!",
                             showConfirmButton: true,
                             confirmButtonText: "Cerrar"
-                        }).then(function(result) {
-                            if (result.value) {   
+                        }).then((result) => {
+                            if (result.value) {
                                 window.location = "index.php?pagina=peliculas";
                             }
                         });
                     </script>';
                 } else {
-                    echo "<div class='alert alert-danger mt-3 small'>ERROR: No se pudieron actualizar los datos</div>";
+                    echo "<div class='alert alert-danger mt-3 small'>ERROR: No se pudo agregar el actor</div>";
                 }
-            } else {
-                echo '<script>
-                        alert("Por favor, llena todos los campos.");
-                      </script>';
             }
-        }
-    }
-        /*=============================================
-    OBTENER DATOS DE UNA PELICULA
-    =============================================*/
-    static public function ctrObtenerPelicula() {
-        if (isset($_POST["id"])) {
-            $tabla = "pelicula";
-            $id = $_POST["id"];
-
-            // Llamar al modelo para obtener los datos
-            $respuesta = ModeloPeliculas::mdlObtenerPelicula($tabla, $id);
-
-            // Devolver la respuesta en formato JSON
-            echo json_encode($respuesta);
         }
     }
 
