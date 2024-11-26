@@ -153,7 +153,7 @@ include "paginas/login.php";
 		Navagación de páginas
 		=============================================*/
 
-		include "paginas/inicio.php";
+		include "paginas/web.php";
 
 		/*
 			if (isset($_GET["pagina"])) {
