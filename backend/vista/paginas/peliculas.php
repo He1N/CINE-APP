@@ -269,7 +269,7 @@ Modal Agregar Pelicula
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST" enctype="multipart/form-data">
+      <form id="agregarPelicula" method="POST" enctype="multipart/form-data">
         <div class="modal-body">
           <div class="row">
             <!-- Nombre -->
@@ -336,6 +336,7 @@ Modal Agregar Pelicula
              $registroPelicula -> ctrAgregarPelicula();
 
         ?>
+        <input type="hidden" name="formulario" value="agregarPelicula">
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
           <button type="submit" class="btn btn-primary">Guardar Película</button>
@@ -361,7 +362,7 @@ Modal Editar Pelicula
             </div>
             <form id="formEditarPelicula" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
-                <input type="hidden" name="editarId">
+                <input type="hidden" id="editarId" name="editarId">
 
                     <div class="row">
                         <!-- Nombre -->

@@ -19,10 +19,8 @@ class ControladorPeliculas{
     /*=============================================
 	Agregar Pelicula
 	=============================================*/
-    static public function ctrAgregarPelicula(){
-
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+    static public function ctrAgregarPelicula() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["formulario"]) && $_POST["formulario"] === "agregarPelicula") {
             // Validar que todos los campos requeridos estén presentes
             if (
                 isset($_POST["nombre"]) &&
@@ -56,27 +54,23 @@ class ControladorPeliculas{
     
                 // Manejar la respuesta del modelo
                 if ($respuesta == "ok") {
-                    echo'<script>
-
-						swal({
-								type:"success",
-							  	title: "¡CORRECTO!",
-							  	text: "La pelicula fue agregada correctamente.",
-							  	showConfirmButton: true,
-								confirmButtonText: "Cerrar"
-							  
-						}).then(function(result){
-
-								if(result.value){   
-								    window.location = "index.php?pagina=peliculas";
-								  } 
-						});
-
-					</script>';
-                    
+                    echo '<script>
+    
+                        swal({
+                                type: "success",
+                                title: "¡CORRECTO!",
+                                text: "La película fue agregada correctamente.",
+                                showConfirmButton: true,
+                                confirmButtonText: "Cerrar"
+                        }).then(function(result) {
+                            if (result.value) {
+                                window.location = "index.php?pagina=peliculas";
+                            }
+                        });
+    
+                    </script>';
                 } else {
                     echo "<div class='alert alert-danger mt-3 small'>ERROR: No se permiten caracteres especiales</div>";
-
                 }
             } else {
                 echo '<script>
@@ -84,59 +78,64 @@ class ControladorPeliculas{
                       </script>';
             }
         }
-
-	}
+    }
+    
     // Método para obtener una película
     public static function ctrObtenerPelicula($id) {
         $tabla = "pelicula";
         return ModeloPeliculas::mdlObtenerPelicula($tabla, $id);
     }
 
-    public function ctrEditarPelicula() {
-        if (isset($_POST["editarId"])) { // Asegúrate de que se envía el ID desde el formulario
-            $tabla = "pelicula";
-            $datos = array(
-                "id" => $_POST["editarId"], // El ID de la película que se está editando
-                "nombre" => $_POST["nombre"],
-                "director" => $_POST["director"],
-                "reparto" => $_POST["reparto"],
-                "galeria" => $_POST["galeria"],
-                "video" => $_POST["video"],
-                "duracion" => $_POST["duracion"],
-                "fecha_estreno" => $_POST["fecha_estreno"],
-                "clasificacion" => $_POST["clasificacion"],
-                "genero" => $_POST["genero"],
-                "descripcion" => $_POST["descripcion"]
-            );
-    
-            // Llamar al modelo para actualizar los datos
-            $respuesta = ModeloPeliculas::mdlEditarPelicula($tabla, $datos);
-    
-            if ($respuesta == "ok") {
-                echo '<script>
-                    swal({
-                        type: "success",
-                        title: "Pelicula editada correctamente!",
-                        showConfirmButton: true,
-                        confirmButtonText: "Cerrar"
-                    }).then((result) => {
-                        if (result.value) {
-                            window.location = "";
-                        }
-                    });
-                </script>';
-            } else {
-                echo "<div class='alert alert-danger mt-3 small'>ERROR: No se pudo editar la pelicula</div>";
+        public static function ctrEditarPelicula() {
+            if (isset($_POST["editarId"])) { // Asegúrate de que se envía el ID desde el formulario
+                $tabla = "pelicula";
+                $datos = array(
+                    "id" => $_POST["editarId"], // El ID de la película que se está editando
+                    "nombre" => $_POST["nombre"],
+                    "director" => $_POST["director"],
+                    "reparto" => $_POST["reparto"],
+                    "galeria" => $_POST["galeria"],
+                    "video" => $_POST["video"],
+                    "duracion" => $_POST["duracion"],
+                    "fecha_estreno" => $_POST["fecha_estreno"],
+                    "clasificacion" => $_POST["clasificacion"],
+                    "genero" => $_POST["genero"],
+                    "descripcion" => $_POST["descripcion"]
+                );
+                
+                // Puedes imprimir los datos en consola usando JavaScript (en caso de que el frontend lo maneje)
+                echo "<script>
+                        console.log('Datos enviados:', " . json_encode($datos) . ");
+                      </script>";
+        
+                // Llamar al modelo para actualizar los datos
+                $respuesta = ModeloPeliculas::mdlEditarPelicula($tabla, $datos);
+                if ($respuesta == "ok") {
+                    echo '<script>
+                        swal({
+                            type: "success",
+                            title: "Pelicula editada correctamente!",
+                            showConfirmButton: true,
+                            confirmButtonText: "Cerrar"
+                        }).then((result) => {
+                            if (result.value) {
+                                window.location = "index.php?pagina=peliculas";
+                            }
+                        });
+                    </script>';
+                } else {
+                    echo "<div class='alert alert-danger mt-3 small'>ERROR: No se pudo editar la pelicula</div>";
+                }
             }
         }
-    }
+        
     
     
     /*=============================================
         MOSTRAR ACTORES
         =============================================*/
         static public function ctrMostrarActores() {
-            $tabla = "actor";
+            $tabla = "actores";
             return ModeloActores::mdlMostrarActores($tabla);
         }
 

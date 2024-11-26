@@ -33,8 +33,8 @@ class TablaPeliculas{
 			ACCIONES
 			=============================================*/
 
-			$acciones = "<a href='index.php?pagina=peliculas&id_p=".$value["id_p"]."' class='btn btn-secondary btn-sm'><i class='far fa-eye'></i></a>";	
-
+			$acciones = "<a href='index.php?pagina=peliculas&id_p=".$value["id_p"]."' class='btn btn-secondary btn-sm'><i class='far fa-eye'></i></a> ";
+			
 
 			$datosJson.= '[
 							
