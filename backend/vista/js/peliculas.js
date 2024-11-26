@@ -106,7 +106,7 @@ $(document).on('click', '.btnEliminarPelicula', function () {
   
                           if(result.value){
   
-                            window.location = "administradores";
+                            window.location = "index.php?pagina=peliculas";
   
                           }
                       

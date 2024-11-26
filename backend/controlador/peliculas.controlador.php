@@ -144,7 +144,7 @@ class ControladorPeliculas{
         MOSTRAR ACTORES
         =============================================*/
         static public function ctrMostrarActores() {
-            $tabla = "actores";
+            $tabla = "actor";
             return ModeloActores::mdlMostrarActores($tabla);
         }
 
