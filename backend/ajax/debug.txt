@@ -1,0 +1,74 @@
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 1
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 1
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 1
+            [1] => 3
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 4
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 4
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 1
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 1
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 1
+            [1] => 4
+        )
+
+    [action] => guardarCartelera
+)

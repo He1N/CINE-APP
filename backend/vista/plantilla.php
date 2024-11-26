@@ -184,7 +184,7 @@ include "paginas/login.php";
 
 	<script src="vista/js/usuario.js"></script>
 	<script src="vista/js/peliculas.js"></script>
-
+	<script src="vista/js/web.js"></script>
 	
 </body>
 
