@@ -6,60 +6,59 @@ require_once "../modelo/peliculas.modelo.php";
 class TablaPeliculas{
 
     /*=============================================
-	Tabla Categorías
-	=============================================*/ 
+    Tabla Películas
+    =============================================*/ 
 
     public function mostrarTabla(){
 
-		$peliculas = ControladorPeliculas::ctrMostrarPeliculas(null);
+        $peliculas = ControladorPeliculas::ctrMostrarPeliculas(null);
 
-		if(count($peliculas)== 0){
+        if(count($peliculas) == 0){
 
- 			$datosJson = '{"data": []}';
+            $datosJson = '{"data": []}';
 
-			echo $datosJson;
+            echo $datosJson;
 
-			return;
+            return;
 
- 		}
+        }
 
- 		$datosJson = '{
+        $datosJson = '{
 
-	 	"data": [ ';
+        "data": [ ';
 
-	 	foreach ($peliculas as $key => $value) {
+        foreach ($peliculas as $key => $value) {
 
-			/*=============================================
-			ACCIONES
-			=============================================*/
+            /*=============================================
+            ACCIONES
+            =============================================*/
 
-			$acciones = "<a href='index.php?pagina=peliculas&id_p=".$value["id_p"]."' class='btn btn-secondary btn-sm'><i class='far fa-eye'></i></a> ";
-			
+            $acciones = "<a href='index.php?pagina=peliculas&id_p=".$value["id_p"]."' class='btn btn-secondary btn-sm'><i class='far fa-eye'></i></a><button class='btn btn-danger btn-sm btnEliminarPelicula' data-id='".$value["id_p"]."'><i class='fas fa-trash'></i></button>";
 
-			$datosJson.= '[
-							
-						"'.($key+1).'",
-						"'.$value["nombre"].'",
-						"'.$acciones.'"
-						
-				],';
+            $datosJson .= '[
+                            
+                        "'.($key+1).'",
+                        "'.$value["nombre"].'",
+                        "'.$acciones.'"
+                        
+                ],';
 
-		}
+        }
 
-		$datosJson = substr($datosJson, 0, -1);
+        $datosJson = substr($datosJson, 0, -1);
 
-		$datosJson.=  ']
+        $datosJson .=  ']
 
-		}';
+        }';
 
-		echo $datosJson;
+        echo $datosJson;
 
-	}
+    }
 
 }
 
 /*=============================================
-Tabla Peliculas
+Tabla Películas
 =============================================*/ 
 
 $tabla = new TablaPeliculas();

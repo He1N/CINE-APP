@@ -85,7 +85,9 @@ class ControladorPeliculas{
         $tabla = "pelicula";
         return ModeloPeliculas::mdlObtenerPelicula($tabla, $id);
     }
-
+    /*=============================================
+	Editar Pelicula
+	=============================================*/
         public static function ctrEditarPelicula() {
             if (isset($_POST["editarId"])) { // Asegúrate de que se envía el ID desde el formulario
                 $tabla = "pelicula";
@@ -128,8 +130,15 @@ class ControladorPeliculas{
                 }
             }
         }
+    /*=============================================
+	Eliminar Pelicula
+	=============================================*/ 
+        public static function ctrEliminarPelicula($id) {
+            $tabla = "pelicula";
+            $respuesta = ModeloPeliculas::mdlEliminarPelicula($tabla, $id);
+            return $respuesta;
+        }
         
-    
     
     /*=============================================
         MOSTRAR ACTORES

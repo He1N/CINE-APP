@@ -64,6 +64,63 @@ $(".tablaPeliculas").DataTable({
 });
 
 
+$(document).on('click', '.btnEliminarPelicula', function () {
+
+    var idPelicula = $(this).data('id'); // Obtener el ID de la película desde data-id
+    console.log("ID de la película:", idPelicula);
+
+    // Confirmación antes de eliminar
+    swal({
+        title: '¿Estás seguro?',
+        text: "¡No podrás revertir esta acción!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then(function(result){
+        if (result.value) {
+
+            var datos = new FormData();
+            datos.append("idEliminarPelicula",idPelicula);
+
+            $.ajax({
+                url: 'ajax/peliculas.ajax.php',
+                method: 'POST',
+                data: datos,
+	            cache: false,
+	            contentType: false,
+	            processData: false,
+                success: function (respuesta) {
+                    if(respuesta == "ok"){
+
+                        swal({
+                        type: "success",
+                        title: "¡CORRECTO!",
+                        text: "El administrador ha sido borrado correctamente",
+                        showConfirmButton: true,
+                        confirmButtonText: "Cerrar",
+                        closeOnConfirm: false
+                       }).then(function(result){
+  
+                          if(result.value){
+  
+                            window.location = "administradores";
+  
+                          }
+                      
+                      })
+  
+                    }
+                },
+                error: function (error) {
+                    console.error("Error en la eliminación:", error);
+                }
+            });
+        }
+    });
+});
 
 
 $(document).ready(function () {

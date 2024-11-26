@@ -116,6 +116,18 @@ class ModeloPeliculas{
             $stmt->close();
             $stmt = null;
     }
+    public static function mdlEliminarPelicula($tabla, $id) {
+        $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_p = :id");
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+    
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+    
+        $stmt = null;
+    }
     
         
 }
