@@ -20,9 +20,31 @@ $('#guardarCartelera').on('click', function () {
         }),
         success: function (response) {
           if (response.success) {
-            alert('Cartelera guardada exitosamente.');
+            // SweetAlert para éxito
+            swal({
+              type: "success",
+              title: "¡CORRECTO!",
+              text: "El administrador ha sido borrado correctamente",
+              showConfirmButton: true,
+              confirmButtonText: "Cerrar",
+              closeOnConfirm: false
+             }).then(function(result){
+
+                if(result.value){
+
+                  window.location = "index.php?pagina=peliculas";
+
+                }
+            
+            })
           } else {
-            alert('Hubo un problema al guardar la cartelera: ' + response.message);
+            // SweetAlert para error
+            Swal({
+              icon: 'error',
+              title: 'Error',
+              text: 'Hubo un problema al guardar la cartelera: ' + response.message,
+              confirmButtonText: 'Aceptar',
+            });
           }
         },
         error: function (xhr, status, error) {

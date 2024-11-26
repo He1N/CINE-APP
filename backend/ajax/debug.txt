@@ -72,3 +72,39 @@ Array
 
     [action] => guardarCartelera
 )
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 6
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 5
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 5
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 5
+        )
+
+    [action] => guardarCartelera
+)

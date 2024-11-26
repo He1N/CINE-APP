@@ -42,6 +42,7 @@ $peliculasDisponibles = $controlador->obtenerPeliculasDisponibles();
       <div class="container-fluid">
         <div class="row">
           <!-- Películas Disponibles -->
+          <!-- Películas Disponibles -->
           <div class="col-12 col-md-6">
             <div class="card">
               <div class="card-header">
@@ -52,7 +53,13 @@ $peliculasDisponibles = $controlador->obtenerPeliculasDisponibles();
                   <?php
                     // Mostrar las películas desde el controlador
                     foreach ($peliculasDisponibles as $pelicula) {
-                      echo '<li class="list-group-item" data-id="' . $pelicula['id_p'] . '">' . $pelicula['nombre'] . ' - Fecha de estreno: ' . $pelicula['fecha_estreno'] .'</li>';
+                      echo '<li class="list-group-item d-flex align-items-center" data-id="' . $pelicula['id_p'] . '">';
+                      echo '<img src="' . $pelicula['galeria'] . '" alt="Poster de ' . htmlspecialchars($pelicula['nombre']) . '" class="img-thumbnail" style="width: 50px; height: 50px; margin-right: 10px;">';
+                      echo '<div>';
+                      echo '<strong>' . htmlspecialchars($pelicula['nombre']) . '</strong><br>';
+                      echo '<small>Fecha de estreno: ' . htmlspecialchars($pelicula['fecha_estreno']) . '</small>';
+                      echo '</div>';
+                      echo '</li>';
                     }
                   ?>
                 </ul>
@@ -75,6 +82,7 @@ $peliculasDisponibles = $controlador->obtenerPeliculasDisponibles();
                 <button id="guardarCartelera" class="btn btn-success" data-id="<?php echo $pelicula['id_p']; ?>">Guardar Cartelera</button>
               </div>
             </div>
+            
           </div>
 
         </div>
