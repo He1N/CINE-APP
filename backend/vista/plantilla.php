@@ -1,8 +1,6 @@
 <?php 
 session_start();
 
-
-
 $ruta = ControladorRuta::ctrRuta();
 $rutaBackend = ControladorRuta::ctrRutaBackend();
 
@@ -153,33 +151,18 @@ include "paginas/login.php";
 		Navagación de páginas
 		=============================================*/
 
-		include "paginas/web.php";
-
-		/*
-			if (isset($_GET["pagina"])) {
-			
-				if ($_GET["pagina"] == "inicio" || $_GET["pagina"] == "usuarios" || $_GET["pagina"] == "peliculas"|| $_GET["pagina"] == "salir") {
-					
-
-					include "paginas/".$_GET["pagina"].".php";
-
-				}else {
-					include "paginas/error404.php";
-				}
-			
-			}else{
-
-				//include "paginas/inicio.php";
-
-			} 
-		*/
-
+		if (isset($_GET["pagina"])) {
+			if ($_GET["pagina"] == "inicio" || $_GET["pagina"] == "usuarios" || $_GET["pagina"] == "peliculas" || $_GET["pagina"] == "web" || $_GET["pagina"] == "salir") {
+				include "paginas/".$_GET["pagina"].".php";
+			} else {
+				include "paginas/error404.php";
+			}
+		} else {
+			include "paginas/inicio.php";
+		}
+		
 		include "paginas/modulos/footer.php";
-
-
 		?>
-
-
 	</div>
 
 	<script src="vista/js/usuario.js"></script>

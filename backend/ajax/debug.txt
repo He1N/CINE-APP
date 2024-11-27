@@ -108,3 +108,21 @@ Array
 
     [action] => guardarCartelera
 )
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 1
+        )
+
+    [action] => guardarCartelera
+)
+Array
+(
+    [peliculas] => Array
+        (
+            [0] => 1
+        )
+
+    [action] => guardarCartelera
+)

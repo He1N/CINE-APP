@@ -5,8 +5,8 @@
   ======================================-->
   <a href="inicio" class="brand-link">
   
-    <!--<img src="vistas/img/plantilla/icono.jpg" class="brand-image img-circle elevation-3" style="opacity: .8">
-    -->
+    <img src="vista/images/plantilla/logo.png" class="brand-image img-circle elevation-3" style="opacity: .8">
+    
     <span class="brand-text font-weight-light">Cinesmero Admin</span>
 
   </a>
@@ -42,9 +42,9 @@
 
         <li class="nav-item">
 
-          <a href="inicio" class="nav-link">
+          <a href="?pagina=inicio" class="nav-link">
 
-            <i class="icon-dashboard"></i>
+          <i class="nav-icon fas fa-tachometer-alt"></i>
 
             <p>Dashboard</p>
 
@@ -58,13 +58,11 @@
           
           <li class="nav-item">
 
-            <a href="usuarios" class="nav-link">
-
-              <i class="nav-icon fas fa-users-cog"></i>
-
-              <p>Usuarios</p>
-
+            <a href="?pagina=usuarios" class="nav-link">
+                <i class="nav-icon fas fa-users-cog"></i>
+                <p>Usuarios</p>
             </a>
+
 
           </li>
 
@@ -74,8 +72,8 @@
 
         <li class="nav-item">
           <a href="entradas" class="nav-link">
-            <i class="nav-icon far fa-images"></i>
-            <p>
+          <i class="nav-icon fas fa-film"></i>
+          <p>
               Banner
             </p>
           </a>
@@ -85,11 +83,11 @@
 
         <li class="nav-item">
           
-          <a href="peliculas" class="nav-link">
+          <a href="?pagina=peliculas" class="nav-link">
             
-            <i class="nav-icon fas fa-shopping-bag"></i>
+          <i class="nav-icon fas fa-video"></i>
             
-            <p>Planes</p>
+            <p>Peliculas</p>
           
           </a>
 
@@ -99,11 +97,11 @@
 
         <li class="nav-item">
           
-          <a href="ofertas" class="nav-link">
+          <a href="?pagina=web" class="nav-link">
             
-            <i class="nav-icon fas fa-list-ul"></i>
+          <i class="nav-icon fas fa-tools"></i>
             
-            <p>Categorías</p>
+            <p>Control Web</p>
           
           </a>
 

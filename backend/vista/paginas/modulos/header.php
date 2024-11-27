@@ -70,7 +70,7 @@
 
     <li class="nav-item">
 
-      <a class="nav-link" href="salir">
+      <a class="nav-link" href="?pagina=salir">
 
         <i class="fas fa-sign-out-alt"></i>
 
