@@ -237,13 +237,21 @@ function formatDuration($minutes) {
                                     <h2 class="section-title mb-4 text-yellow-400">Reparto</h2>
                                     <div>
                                         <?php if (!empty($pelicula['actores'])): ?>
-                                            <?php foreach ($pelicula['actores'] as $actor): ?>
+                                            <?php foreach ($pelicula['actores'] as $index => $actor): ?>
                                             <div class="d-flex align-items-center gap-3 mb-2">
-                                                <img 
-                                                    src="/placeholder.svg?height=50&width=50&text=<?php echo substr(htmlspecialchars($actor), 0, 4); ?>" 
-                                                    alt="<?php echo htmlspecialchars($actor); ?>" 
-                                                    class="rounded-circle" width="48" height="48"
-                                                />
+                                                <?php if (!empty($pelicula['img_actores'][$index])): ?>
+                                                    <img 
+                                                        src="<?php echo htmlspecialchars($pelicula['img_actores'][$index]); ?>" 
+                                                        alt="<?php echo htmlspecialchars($actor); ?>" 
+                                                        class="rounded-circle" width="48" height="48"
+                                                    />
+                                                <?php else: ?>
+                                                    <img 
+                                                        src="/placeholder.svg?height=50&width=50&text=<?php echo substr(htmlspecialchars($actor), 0, 4); ?>" 
+                                                        alt="<?php echo htmlspecialchars($actor); ?>" 
+                                                        class="rounded-circle" width="48" height="48"
+                                                    />
+                                                <?php endif; ?>
                                                 <span class="cast-name"><?php echo htmlspecialchars($actor); ?></span>
                                             </div>
                                             <?php endforeach; ?>
