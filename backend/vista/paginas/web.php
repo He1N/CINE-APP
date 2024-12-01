@@ -40,52 +40,67 @@ $peliculasDisponibles = $controlador->obtenerPeliculasDisponibles();
     <!-- Main Content -->
     <section class="content">
       <div class="container-fluid">
-        <div class="row">
-          <!-- Películas Disponibles -->
-          <!-- Películas Disponibles -->
-          <div class="col-12 col-md-6">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Películas Disponibles</h3>
-              </div>
-              <div class="card-body">
-                <ul id="peliculasDisponibles" class="list-group">
-                  <?php
-                    // Mostrar las películas desde el controlador
-                    foreach ($peliculasDisponibles as $pelicula) {
-                      echo '<li class="list-group-item d-flex align-items-center" data-id="' . $pelicula['id_p'] . '">';
-                      echo '<img src="' . $pelicula['galeria'] . '" alt="Poster de ' . htmlspecialchars($pelicula['nombre']) . '" class="img-thumbnail" style="width: 50px; height: 50px; margin-right: 10px;">';
-                      echo '<div>';
-                      echo '<strong>' . htmlspecialchars($pelicula['nombre']) . '</strong><br>';
-                      echo '<small>Fecha de estreno: ' . htmlspecialchars($pelicula['fecha_estreno']) . '</small>';
-                      echo '</div>';
-                      echo '</li>';
-                    }
-                  ?>
-                </ul>
-              </div>
-            </div>
-          </div>
 
-          <!-- Cartelera -->
-          <div class="col-12 col-md-6">
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Películas en Cartelera</h3>
-              </div>
-              <div class="card-body">
-                <ul id="cartelera" class="list-group">
-                  <!-- Las películas seleccionadas irán aquí -->
-                </ul>
-              </div>
-              <div class="card-footer">
-                <button id="guardarCartelera" class="btn btn-success" data-id="<?php echo $pelicula['id_p']; ?>">Guardar Cartelera</button>
-              </div>
-            </div>
-            
-          </div>
+        <div class="container mt-5">
+    <div class="card shadow">
+        
+        <div class="card-body">
+            <form action="?pagina=web" method="POST">
+                <table id="tablaPeliculas" class="table table-striped table-hover" style="width:100%">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Imagen</th>
+                            <th>Título</th>
+                            <th>Descripción</th>
+                            <th>En cartelera</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        // Conexión a la base de datos
+                        $conexion = new PDO("mysql:host=localhost;dbname=cine", "root", "");
 
+                        // Consulta de las películas
+                        $peliculas = $conexion->query("SELECT id_p, nombre, descripcion, en_cartelera, galeria FROM pelicula");
+
+                        foreach ($peliculas as $pelicula) {
+                            echo "<tr>
+                                    <td>{$pelicula['id_p']}</td>
+                                    <td>
+                                        <img src='{$pelicula['galeria']}' alt='{$pelicula['nombre']}' style='width: 80px; height: auto; border-radius: 5px;'>
+                                    </td>
+                                    <td>{$pelicula['nombre']}</td>
+                                    <td>" . substr($pelicula['descripcion'], 0, 50) . "...</td>
+                                    <td class='text-center'>
+                                        <input type='checkbox' name='cartelera[{$pelicula['id_p']}]' value='1' " . ($pelicula['en_cartelera'] ? "checked" : "") . ">
+                                    </td>
+                                  </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">Guardar cambios</button>
+                </div>
+            </form>
         </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#tablaPeliculas').DataTable({
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+            },
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true
+        });
+    });
+</script>
+
       </div>
     </section>
   </div>
@@ -109,3 +124,23 @@ $peliculasDisponibles = $controlador->obtenerPeliculasDisponibles();
   
 
 </script>
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Conexión a la base de datos
+    $conexion = new PDO("mysql:host=localhost;dbname=cine", "root", "");
+
+    // Obtén los IDs seleccionados
+    $seleccionados = isset($_POST['cartelera']) ? array_keys($_POST['cartelera']) : [];
+
+    // Actualiza todas las películas a "no en cartelera"
+    $conexion->exec("UPDATE pelicula SET en_cartelera = 0");
+
+    // Actualiza las seleccionadas a "en cartelera"
+    if (!empty($seleccionados)) {
+        $ids = implode(',', array_map('intval', $seleccionados));
+        $conexion->exec("UPDATE pelicula SET en_cartelera = 1 WHERE id_p IN ($ids)");
+    }
+
+   
+}
+?>
