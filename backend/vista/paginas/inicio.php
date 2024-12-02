@@ -59,7 +59,27 @@ try {
 }
 
 ?>
+<head>
+  <style>
+        .card {
+      border-radius: 10px;
+      transition: transform 0.2s ease-in-out;
+    }
 
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .card-header {
+      font-weight: bold;
+    }
+
+    .card-title {
+      font-size: 2.5rem;
+    }
+
+  </style>
+</head>
 <div class="wrapper">
   
   <!-- Content Wrapper -->
@@ -85,54 +105,49 @@ try {
     <section class="content">
       <div class="container-fluid">
         <div class="row">
-          <!-- Dashboard Cards -->
-          <div class="col-3">
-            <div class="card bg-primary text-white">
-              <div class="card-header">
-                <i class="fas fa-users"></i> Total de Usuarios
+          <!-- Total de Ingresos de Hoy -->
+          <div class="col-md-4">
+            <div class="card bg-success text-white shadow-lg">
+              <div class="card-header d-flex align-items-center">
+                <i class="fas fa-coins fa-2x me-3"></i>
+                <h5 class="mb-0">Ingresos de Hoy</h5>
               </div>
               <div class="card-body">
-                <h5 class="card-title">1,250</h5>
-                <p class="card-text">Usuarios registrados.</p>
+                <h3 class="card-title">$1,580</h3>
+                <p class="card-text">Total generado en ingresos hoy.</p>
               </div>
             </div>
           </div>
 
-          <div class="col-3">
-            <div class="card bg-success text-white">
-              <div class="card-header">
-                <i class="fas fa-dollar-sign"></i> Ventas Mensuales
+          <!-- Cantidad de Reservas de Hoy -->
+          <div class="col-md-4">
+            <div class="card bg-primary text-white shadow-lg">
+              <div class="card-header d-flex align-items-center">
+                <i class="fas fa-ticket-alt fa-2x me-3"></i>
+                <h5 class="mb-0">Reservas de Hoy</h5>
               </div>
               <div class="card-body">
-                <h5 class="card-title">$12,345</h5>
-                <p class="card-text">Ventas realizadas este mes.</p>
+                <h3 class="card-title">125</h3>
+                <p class="card-text">Número de reservas realizadas hoy.</p>
               </div>
             </div>
           </div>
 
-          <div class="col-3">
-            <div class="card bg-warning text-white">
-              <div class="card-header">
-                <i class="fas fa-eye"></i> Visitas del Sitio
+          <!-- Cantidad de Usuarios Registrados Hoy -->
+          <div class="col-md-4">
+            <div class="card bg-warning text-white shadow-lg">
+              <div class="card-header d-flex align-items-center">
+                <i class="fas fa-user-plus fa-2x me-3"></i>
+                <h5 class="mb-0">Usuarios Registrados Hoy</h5>
               </div>
               <div class="card-body">
-                <h5 class="card-title">5,678</h5>
-                <p class="card-text">Visitas este mes.</p>
+                <h3 class="card-title">20</h3>
+                <p class="card-text">Usuarios nuevos registrados hoy.</p>
               </div>
             </div>
           </div>
 
-          <div class="col-3">
-            <div class="card bg-danger text-white">
-              <div class="card-header">
-                <i class="fas fa-exclamation-triangle"></i> Alertas Críticas
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">3</h5>
-                <p class="card-text">Alertas sin resolver.</p>
-              </div>
-            </div>
-          </div>
+          
         </div>
 
         <!-- Cards for Movie Analytics -->
