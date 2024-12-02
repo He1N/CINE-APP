@@ -42,7 +42,7 @@ $(".tablaPeliculas").DataTable({
         data: { idPelicula: idPelicula },
         dataType: 'json',
         success: function (respuesta) {
-            $('#editarId').val(respuesta.id_p); // Cambiar 'id' por 'id_p'
+            $('#editarId').val(respuesta.id); // Cambiar 'id' por 'id'
             $('#editarNombre').val(respuesta.nombre);
             $('#editarDirector').val(respuesta.director);
             $('#editarReparto').val(respuesta.reparto);

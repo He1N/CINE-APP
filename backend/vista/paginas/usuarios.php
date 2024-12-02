@@ -103,7 +103,7 @@
 
           <th style="width:10px">#</th>
           <th>Foto</th> 
-          <th>Nombre</th>
+          <th>Nombres</th>
           <th>Contraseña</th>
           <th>Email</th>
           <th>Tipo de Usuario</th> 

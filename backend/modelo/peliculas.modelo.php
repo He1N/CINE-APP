@@ -12,9 +12,9 @@ class ModeloPeliculas{
 
 		if($valor != null){
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_p = :id_p");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id = :id");
 
-			$stmt -> bindParam(":id_p", $valor, PDO::PARAM_STR);
+			$stmt -> bindParam(":id", $valor, PDO::PARAM_STR);
 
 			$stmt -> execute();
 
@@ -22,7 +22,7 @@ class ModeloPeliculas{
 
 		}else{
 
-			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY $tabla.id_p DESC");
+			$stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla ORDER BY $tabla.id DESC");
 
 			$stmt -> execute();
 
@@ -69,9 +69,9 @@ class ModeloPeliculas{
 
         $stmt = null;
     }
-    public static function mdlObtenerPelicula($tabla, $id_p) {
-        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_p = :id_p");
-        $stmt->bindParam(":id_p", $id_p, PDO::PARAM_INT);
+    public static function mdlObtenerPelicula($tabla, $id) {
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id = :id");
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch();
         $stmt->close();
@@ -92,7 +92,7 @@ class ModeloPeliculas{
                     clasificacion = :clasificacion,
                     genero = :genero,
                     descripcion = :descripcion
-                WHERE id_p = :id"
+                WHERE id = :id"
             );
     
             // Asociar parámetros con los valores de $datos
@@ -117,7 +117,7 @@ class ModeloPeliculas{
             $stmt = null;
     }
     public static function mdlEliminarPelicula($tabla, $id) {
-        $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_p = :id");
+        $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     
         if ($stmt->execute()) {

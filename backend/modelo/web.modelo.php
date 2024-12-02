@@ -36,12 +36,12 @@ class ModeloWeb {
     static public function mdlActualizarCartelera($tabla, $peliculas) {
         
         // Primero, reseteamos las películas en cartelera a 0
-        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estreno = 1 WHERE id_p = :id");
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estreno = 1 WHERE id = :id");
         $stmt->bindParam(":id", $pelicula_id, PDO::PARAM_INT);
         
         // Luego, marcamos las películas seleccionadas como en cartelera
         foreach($peliculas as $pelicula_id) {
-            $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estreno = 1 WHERE id_p = :id");
+            $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET estreno = 1 WHERE id = :id");
             $stmt->bindParam(":id", $pelicula_id, PDO::PARAM_INT);
             $stmt->execute();
         }

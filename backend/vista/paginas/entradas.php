@@ -54,9 +54,9 @@
                                     <select id="pelicula" name="id_pelicula" class="form-select" required>
                                         <?php
                                         // Consulta para obtener películas en cartelera
-                                        $peliculas = $conexion->query("SELECT id_p, nombre FROM pelicula WHERE estreno = 1");
+                                        $peliculas = $conexion->query("SELECT id, nombre FROM pelicula WHERE estreno = 1");
                                         foreach ($peliculas as $pelicula) {
-                                            echo "<option value='{$pelicula['id_p']}'>{$pelicula['nombre']}</option>";
+                                            echo "<option value='{$pelicula['id']}'>{$pelicula['nombre']}</option>";
                                         }
                                         ?>
                                     </select>
@@ -113,7 +113,7 @@
                                         p.hora 
                                     FROM programacion p
                                     JOIN sala s ON p.id_sala = s.id_sala
-                                    JOIN pelicula pl ON p.id_pelicula = pl.id_p
+                                    JOIN pelicula pl ON p.id_pelicula = pl.id
                                     ORDER BY p.fecha, p.hora
                                 ");
 

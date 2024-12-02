@@ -124,9 +124,9 @@
 
         <?php
 
-        if(isset($_GET["id_p"])){
+        if(isset($_GET["id"])){
 
-          $pelicula = ControladorPeliculas::ctrMostrarPeliculas($_GET["id_p"]);
+          $pelicula = ControladorPeliculas::ctrMostrarPeliculas($_GET["id"]);
 
         }else{
 
@@ -145,7 +145,7 @@
             <h3 class="card-title">Detalles de la Película</h3>
             <?php if ($pelicula): ?>
                 <button class="btn btn-warning btn-sm float-right" id="btnEditarPelicula" 
-                        data-id="<?php echo $pelicula['id_p']; ?>" 
+                        data-id="<?php echo $pelicula['id']; ?>" 
                         data-toggle="modal" data-target="#modalEditarPelicula">
                     <i class="fas fa-edit"></i> Editar
                 </button>

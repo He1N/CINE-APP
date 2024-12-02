@@ -35,11 +35,11 @@ class TablaUsuarioRegistrado{
 		$datosJson .='[
 				      "'.($key+1).'",
                       "'.$value["foto"].'",
-				      "'.$value["nombre"].'",
-				      "'.$value["password"].'",
+				      "'.$value["nombres"].'",
+				      "'.$value["contrasena"].'",
                       "'.$value["usuario"].'",
                       "'.$value["tipo_usuario"].'",
-                      "'.$value["DNI"].'",
+                      "'.$value["dni"].'",
 					  "'.$acciones.'"
 				    ],';
 
