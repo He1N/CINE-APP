@@ -54,7 +54,7 @@
                                     <select id="pelicula" name="id_pelicula" class="form-select" required>
                                         <?php
                                         // Consulta para obtener películas en cartelera
-                                        $peliculas = $conexion->query("SELECT id_p, nombre FROM pelicula WHERE en_cartelera = 1");
+                                        $peliculas = $conexion->query("SELECT id_p, nombre FROM pelicula WHERE estreno = 1");
                                         foreach ($peliculas as $pelicula) {
                                             echo "<option value='{$pelicula['id_p']}'>{$pelicula['nombre']}</option>";
                                         }

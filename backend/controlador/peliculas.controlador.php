@@ -26,8 +26,8 @@ class ControladorPeliculas{
                 isset($_POST["nombre"]) &&
                 isset($_POST["director"]) &&
                 isset($_POST["reparto"]) &&
-                isset($_POST["galeria"]) &&
-                isset($_POST["video"]) &&
+                isset($_POST["imagen"]) &&
+                isset($_POST["trailer_url"]) &&
                 isset($_POST["duracion"]) &&
                 isset($_POST["fecha_estreno"]) &&
                 isset($_POST["clasificacion"]) &&
@@ -40,8 +40,8 @@ class ControladorPeliculas{
                     "nombre" => $_POST["nombre"],
                     "director" => $_POST["director"],
                     "reparto" => $_POST["reparto"],
-                    "galeria" => $_POST["galeria"],
-                    "video" => $_POST["video"],
+                    "imagen" => $_POST["imagen"],
+                    "trailer_url" => $_POST["trailer_url"],
                     "duracion" => $_POST["duracion"],
                     "fecha_estreno" => $_POST["fecha_estreno"],
                     "clasificacion" => $_POST["clasificacion"],
@@ -96,8 +96,8 @@ class ControladorPeliculas{
                     "nombre" => $_POST["nombre"],
                     "director" => $_POST["director"],
                     "reparto" => $_POST["reparto"],
-                    "galeria" => $_POST["galeria"],
-                    "video" => $_POST["video"],
+                    "imagen" => $_POST["imagen"],
+                    "trailer_url" => $_POST["trailer_url"],
                     "duracion" => $_POST["duracion"],
                     "fecha_estreno" => $_POST["fecha_estreno"],
                     "clasificacion" => $_POST["clasificacion"],

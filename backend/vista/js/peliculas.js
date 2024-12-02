@@ -46,8 +46,8 @@ $(".tablaPeliculas").DataTable({
             $('#editarNombre').val(respuesta.nombre);
             $('#editarDirector').val(respuesta.director);
             $('#editarReparto').val(respuesta.reparto);
-            $('#editarGaleria').val(respuesta.galeria);
-            $('#editarVideo').val(respuesta.video);
+            $('#editarimagen').val(respuesta.imagen);
+            $('#editartrailer_url').val(respuesta.trailer_url);
             $('#editarDuracion').val(respuesta.duracion);
             $('#editarFechaEstreno').val(respuesta.fecha_estreno);
             $('#editarClasificacion').val(respuesta.clasificacion);

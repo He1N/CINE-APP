@@ -160,10 +160,10 @@
                 <!-- Galería -->
                 <div class="col-12 mb-4 text-center">
                     <strong>Galería:</strong>
-                    <?php if (!empty($pelicula["galeria"])): ?>
+                    <?php if (!empty($pelicula["imagen"])): ?>
                         <div class="card text-center">
                             <img 
-                                src="<?php echo $pelicula["galeria"]; ?>" 
+                                src="<?php echo $pelicula["imagen"]; ?>" 
                                 class="card-img-top img-fluid mx-auto d-block" 
                                 style="max-width: 100%; max-height: 300px; object-fit: contain;" 
                                 alt="Imagen de <?php echo $pelicula["nombre"]; ?>"
@@ -179,13 +179,13 @@
                 <!-- Trailer -->
                 <div class="col-12 mb-4 text-center">
                 <strong>Tráiler:</strong>
-                <?php if (!empty($pelicula["video"])): ?>
+                <?php if (!empty($pelicula["trailer_url"])): ?>
                     <div class="embed-responsive embed-responsive-16by9">
                     <iframe 
                         class="embed-responsive-item" 
                         style="width: 100%; height: 500px; border: none;" 
 
-                        src="https://www.youtube.com/embed/<?php echo obtenerIdYoutube($pelicula["video"]); ?>" 
+                        src="https://www.youtube.com/embed/<?php echo obtenerIdYoutube($pelicula["trailer_url"]); ?>" 
                         allowfullscreen>
                     </iframe>
                     </div>
@@ -234,7 +234,7 @@
         <?php endif; ?>
 
         <?php
-        // Función para extraer el ID del video de YouTube desde una URL
+        // Función para extraer el ID del trailer_url de YouTube desde una URL
         function obtenerIdYoutube($url) {
             preg_match('/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/', $url, $matches);
             return $matches[1] ?? '';
@@ -289,13 +289,13 @@ Modal Agregar Pelicula
             </div>
             <!-- Galería -->
             <div class="col-md-12 mb-3">
-              <label for="galeria">Imagen (URL):</label>
-              <input type="text" class="form-control" id="galeria" name="galeria" placeholder="URL de la imagen promocional" required>
+              <label for="imagen">Imagen (URL):</label>
+              <input type="text" class="form-control" id="imagen" name="imagen" placeholder="URL de la imagen promocional" required>
             </div>
-            <!-- Video -->
+            <!-- trailer_url -->
             <div class="col-md-12 mb-3">
-              <label for="video">Tráiler (YouTube):</label>
-              <input type="text" class="form-control" id="video" name="video" placeholder="Enlace al tráiler en YouTube">
+              <label for="trailer_url">Tráiler (YouTube):</label>
+              <input type="text" class="form-control" id="trailer_url" name="trailer_url" placeholder="Enlace al tráiler en YouTube">
             </div>
             <!-- Duración -->
             <div class="col-md-6 mb-3">
@@ -382,13 +382,13 @@ Modal Editar Pelicula
                         </div>
                         <!-- Galería -->
                         <div class="col-md-12 mb-3">
-                            <label for="editarGaleria">Imagen (URL):</label>
-                            <input type="text" class="form-control" id="editarGaleria" name="galeria" required>
+                            <label for="editarimagen">Imagen (URL):</label>
+                            <input type="text" class="form-control" id="editarimagen" name="imagen" required>
                         </div>
-                        <!-- Video -->
+                        <!-- trailer_url -->
                         <div class="col-md-12 mb-3">
-                            <label for="editarVideo">Tráiler (YouTube):</label>
-                            <input type="text" class="form-control" id="editarVideo" name="video">
+                            <label for="editartrailer_url">Tráiler (YouTube):</label>
+                            <input type="text" class="form-control" id="editartrailer_url" name="trailer_url">
                         </div>
                         <!-- Duración -->
                         <div class="col-md-6 mb-3">

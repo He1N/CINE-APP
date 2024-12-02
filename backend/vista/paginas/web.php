@@ -62,18 +62,18 @@ $peliculasDisponibles = $controlador->obtenerPeliculasDisponibles();
                         $conexion = new PDO("mysql:host=localhost;dbname=cine", "root", "");
 
                         // Consulta de las películas
-                        $peliculas = $conexion->query("SELECT id_p, nombre, descripcion, en_cartelera, galeria FROM pelicula");
+                        $peliculas = $conexion->query("SELECT id_p, nombre, descripcion, estreno, imagen FROM pelicula");
 
                         foreach ($peliculas as $pelicula) {
                             echo "<tr>
                                     <td>{$pelicula['id_p']}</td>
                                     <td>
-                                        <img src='{$pelicula['galeria']}' alt='{$pelicula['nombre']}' style='width: 80px; height: auto; border-radius: 5px;'>
+                                        <img src='{$pelicula['imagen']}' alt='{$pelicula['nombre']}' style='width: 80px; height: auto; border-radius: 5px;'>
                                     </td>
                                     <td>{$pelicula['nombre']}</td>
                                     <td>" . substr($pelicula['descripcion'], 0, 50) . "...</td>
                                     <td class='text-center'>
-                                        <input type='checkbox' name='cartelera[{$pelicula['id_p']}]' value='1' " . ($pelicula['en_cartelera'] ? "checked" : "") . ">
+                                        <input type='checkbox' name='cartelera[{$pelicula['id_p']}]' value='1' " . ($pelicula['estreno'] ? "checked" : "") . ">
                                     </td>
                                   </tr>";
                         }
@@ -133,12 +133,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $seleccionados = isset($_POST['cartelera']) ? array_keys($_POST['cartelera']) : [];
 
     // Actualiza todas las películas a "no en cartelera"
-    $conexion->exec("UPDATE pelicula SET en_cartelera = 0");
+    $conexion->exec("UPDATE pelicula SET estreno = 0");
 
     // Actualiza las seleccionadas a "en cartelera"
     if (!empty($seleccionados)) {
         $ids = implode(',', array_map('intval', $seleccionados));
-        $conexion->exec("UPDATE pelicula SET en_cartelera = 1 WHERE id_p IN ($ids)");
+        $conexion->exec("UPDATE pelicula SET estreno = 1 WHERE id_p IN ($ids)");
     }
 
    

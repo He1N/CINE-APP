@@ -54,7 +54,7 @@ $peliculasDisponibles = $controlador->obtenerPeliculasDisponibles();
                     // Mostrar las películas desde el controlador
                     foreach ($peliculasDisponibles as $pelicula) {
                       echo '<li class="list-group-item d-flex align-items-center" data-id="' . $pelicula['id_p'] . '">';
-                      echo '<img src="' . $pelicula['galeria'] . '" alt="Poster de ' . htmlspecialchars($pelicula['nombre']) . '" class="img-thumbnail" style="width: 50px; height: 50px; margin-right: 10px;">';
+                      echo '<img src="' . $pelicula['imagen'] . '" alt="Poster de ' . htmlspecialchars($pelicula['nombre']) . '" class="img-thumbnail" style="width: 50px; height: 50px; margin-right: 10px;">';
                       echo '<div>';
                       echo '<strong>' . htmlspecialchars($pelicula['nombre']) . '</strong><br>';
                       echo '<small>Fecha de estreno: ' . htmlspecialchars($pelicula['fecha_estreno']) . '</small>';
@@ -100,13 +100,13 @@ $peliculasDisponibles = $controlador->obtenerPeliculasDisponibles();
                   $conexion = new PDO("mysql:host=localhost;dbname=cine", "root", "");
 
                   // Consulta de las películas
-                  $peliculas = $conexion->query("SELECT id_p, nombre, en_cartelera FROM pelicula");
+                  $peliculas = $conexion->query("SELECT id_p, nombre, estreno FROM pelicula");
 
                   foreach ($peliculas as $pelicula) {
                       echo "<tr>
                               <td>{$pelicula['nombre']}</td>
                               <td>
-                                  <input type='checkbox' name='cartelera[{$pelicula['id_p']}]' value='1' " . ($pelicula['en_cartelera'] ? "checked" : "") . ">
+                                  <input type='checkbox' name='cartelera[{$pelicula['id_p']}]' value='1' " . ($pelicula['estreno'] ? "checked" : "") . ">
                               </td>
                             </tr>";
                   }
@@ -148,12 +148,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $seleccionados = isset($_POST['cartelera']) ? array_keys($_POST['cartelera']) : [];
 
     // Actualiza todas las películas a "no en cartelera"
-    $conexion->exec("UPDATE pelicula SET en_cartelera = 0");
+    $conexion->exec("UPDATE pelicula SET estreno = 0");
 
     // Actualiza las seleccionadas a "en cartelera"
     if (!empty($seleccionados)) {
         $ids = implode(',', array_map('intval', $seleccionados));
-        $conexion->exec("UPDATE pelicula SET en_cartelera = 1 WHERE id_p IN ($ids)");
+        $conexion->exec("UPDATE pelicula SET estreno = 1 WHERE id_p IN ($ids)");
     }
 
     // Redirecciona al administrador

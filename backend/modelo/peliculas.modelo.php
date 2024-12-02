@@ -42,16 +42,16 @@ class ModeloPeliculas{
     static public function mdlAgregarPelicula($tabla, $datos) {
 
             $stmt = Conexion::conectar()->prepare(
-                "INSERT INTO $tabla (nombre, director, reparto, galeria, video, duracion, fecha_estreno, clasificacion, genero, descripcion) 
-                 VALUES (:nombre, :director, :reparto, :galeria, :video, :duracion, :fecha_estreno, :clasificacion, :genero, :descripcion)"
+                "INSERT INTO $tabla (nombre, director, reparto, imagen, trailer_url, duracion, fecha_estreno, clasificacion, genero, descripcion) 
+                 VALUES (:nombre, :director, :reparto, :imagen, :trailer_url, :duracion, :fecha_estreno, :clasificacion, :genero, :descripcion)"
             );
 
             // Vincular parámetros
             $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
             $stmt->bindParam(":director", $datos["director"], PDO::PARAM_STR);
             $stmt->bindParam(":reparto", $datos["reparto"], PDO::PARAM_STR);
-            $stmt->bindParam(":galeria", $datos["galeria"], PDO::PARAM_STR);
-            $stmt->bindParam(":video", $datos["video"], PDO::PARAM_STR);
+            $stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
+            $stmt->bindParam(":trailer_url", $datos["trailer_url"], PDO::PARAM_STR);
             $stmt->bindParam(":duracion", $datos["duracion"], PDO::PARAM_INT);
             $stmt->bindParam(":fecha_estreno", $datos["fecha_estreno"], PDO::PARAM_STR);
             $stmt->bindParam(":clasificacion", $datos["clasificacion"], PDO::PARAM_STR);
@@ -85,8 +85,8 @@ class ModeloPeliculas{
                     nombre = :nombre,
                     director = :director,
                     reparto = :reparto,
-                    galeria = :galeria,
-                    video = :video,
+                    imagen = :imagen,
+                    trailer_url = :trailer_url,
                     duracion = :duracion,
                     fecha_estreno = :fecha_estreno,
                     clasificacion = :clasificacion,
@@ -99,8 +99,8 @@ class ModeloPeliculas{
             $stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
             $stmt->bindParam(":director", $datos["director"], PDO::PARAM_STR);
             $stmt->bindParam(":reparto", $datos["reparto"], PDO::PARAM_STR);
-            $stmt->bindParam(":galeria", $datos["galeria"], PDO::PARAM_STR);
-            $stmt->bindParam(":video", $datos["video"], PDO::PARAM_STR);
+            $stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
+            $stmt->bindParam(":trailer_url", $datos["trailer_url"], PDO::PARAM_STR);
             $stmt->bindParam(":duracion", $datos["duracion"], PDO::PARAM_INT);
             $stmt->bindParam(":fecha_estreno", $datos["fecha_estreno"], PDO::PARAM_STR);
             $stmt->bindParam(":clasificacion", $datos["clasificacion"], PDO::PARAM_STR);
