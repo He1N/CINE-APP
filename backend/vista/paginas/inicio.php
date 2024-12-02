@@ -32,11 +32,30 @@ try {
     $stmtMin = $conn->prepare($sqlMin);
     $stmtMin->execute();
     $peliculaMin = $stmtMin->fetch(PDO::FETCH_ASSOC);
+     // Ventas diarias
+     $sqlDaily = "SELECT DATE(fecha_hora_transaccion) AS fecha, SUM(total) AS total_dia
+     FROM reserva
+     GROUP BY DATE(fecha_hora_transaccion)
+     ORDER BY fecha ASC";
+      $stmtDaily = $conn->prepare($sqlDaily);
+      $stmtDaily->execute();
+      $ventasDiarias = $stmtDaily->fetchAll(PDO::FETCH_ASSOC);
+
+      // Ventas mensuales
+      $sqlMonthly = "SELECT DATE_FORMAT(fecha_hora_transaccion, '%Y-%m') AS mes, SUM(total) AS total_mes
+            FROM reserva
+            GROUP BY mes
+            ORDER BY mes ASC";
+      $stmtMonthly = $conn->prepare($sqlMonthly);
+      $stmtMonthly->execute();
+      $ventasMensuales = $stmtMonthly->fetchAll(PDO::FETCH_ASSOC);
 
 } catch (PDOException $e) {
-    echo "Error en las consultas: " . $e->getMessage();
-    $peliculaMax = null;
-    $peliculaMin = null;
+  echo "Error en las consultas: " . $e->getMessage();
+  $peliculaMax = null;
+  $peliculaMin = null;
+  $ventasDiarias = [];
+  $ventasMensuales = [];
 }
 
 ?>
@@ -159,8 +178,85 @@ try {
               </div>
             </div>
           </div>
+
+          
+        </div>
+        <!-- Gráficos -->
+        <div class="row mt-5">
+          <div class="col-6">
+            <div class="card">
+              <div class="card-header">
+                <i class="fas fa-chart-line"></i> Ventas Diarias y Mensuales
+              </div>
+              <div class="card-body">
+                <canvas id="ventasChart"></canvas>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   </div>
 </div>
+<!-- Agregar Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Datos de ventas diarias
+  const ventasDiarias = <?= json_encode($ventasDiarias); ?>;
+  const labelsDiarias = ventasDiarias.map(item => item.fecha);
+  const dataDiarias = ventasDiarias.map(item => parseFloat(item.total_dia));
+
+  // Datos de ventas mensuales
+  const ventasMensuales = <?= json_encode($ventasMensuales); ?>;
+  const labelsMensuales = ventasMensuales.map(item => item.mes);
+  const dataMensuales = ventasMensuales.map(item => parseFloat(item.total_mes));
+
+  // Configuración del gráfico
+  const ctx = document.getElementById('ventasChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [...labelsDiarias, ...labelsMensuales],
+      datasets: [
+        {
+          label: 'Ventas Diarias',
+          data: dataDiarias,
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 2,
+          fill: false,
+          tension: 0.1
+        },
+        {
+          label: 'Ventas Mensuales',
+          data: dataMensuales,
+          borderColor: 'rgba(153, 102, 255, 1)',
+          borderWidth: 2,
+          fill: false,
+          tension: 0.1
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        }
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Tiempo'
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Total ($)'
+          }
+        }
+      }
+    }
+  });
+</script>
