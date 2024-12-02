@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2024 a las 22:11:38
+-- Tiempo de generación: 02-12-2024 a las 22:19:59
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -129,28 +129,34 @@ CREATE TABLE `reserva` (
 --
 
 INSERT INTO `reserva` (`id`, `pelicula_id`, `pelicula_nombre`, `fecha_reserva`, `hora_reserva`, `sala`, `formato`, `asientos`, `total`, `cliente_nombres`, `cliente_apellidos`, `cliente_dni`, `fecha_hora_transaccion`) VALUES
-(26, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'C6', 10.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 00:06:17'),
-(27, 1, 'Alien', '2024-12-17', '16:30:00', 'A', '2D Regular Doblada', 'G6', 10.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 00:21:21'),
-(28, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'A8', 10.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 00:29:45'),
-(29, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'H9, J10', 20.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 00:32:16'),
-(30, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'C10, I10, H10, G10, F10, E10, D10, B10', 80.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 00:35:55'),
-(31, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'A10, B10, C10, D10, E10, F10', 60.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 00:39:07'),
-(32, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'A10, B10, C10', 30.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 00:45:44'),
-(33, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'F5, G6', 20.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 00:52:24'),
-(34, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'E6', 10.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 00:57:05'),
-(35, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'I8', 10.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 01:03:49'),
-(36, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'A10, B10, D10', 30.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 01:09:06'),
-(37, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'D6', 10.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 01:12:33'),
-(38, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'C6, B10, E10, F10, C10', 50.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 01:16:13'),
-(39, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'I10, F10, E10', 30.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 01:19:30'),
-(40, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'D8', 10.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 01:25:13'),
-(41, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'E6', 10.00, 'Axel', 'B', '32910111', '2024-12-02 04:12:28'),
-(42, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'B8', 10.00, 'Jose', 'Pérez García', '12345678', '2024-12-02 04:13:54'),
-(43, 1, 'Alien', '2024-12-17', '19:30:00', 'A', '3D Regular Doblada', 'I9', 10.00, 'Lucas', 'Sanchez', '12345678', '2024-12-02 04:18:55'),
-(44, 1, 'Alien', '2024-12-17', '19:30:00', 'A', '3D Regular Doblada', 'G8', 10.00, 'Juan', 'Pérez García', '12345678', '2024-12-02 04:23:29'),
-(45, 1, 'Alien', '2024-12-17', '18:00:00', 'B', '2D Regular Doblada', 'F5', 10.00, 'Pepe', 'Perez', '12345678', '2024-12-02 12:50:33'),
-(46, 1, 'Alien', '2024-12-17', '15:30:00', 'A', '2D Regular Doblada', 'J10, I10, H10, F10, E10, C10, B10, F5, G7, D6, J9, I9, H9, G9, F9, E9, D9, B9, A9, J8, I8, H8, G8, E8, F8, D8, C8, B8', 280.00, 'Jose', 'Perez', '12345678', '2024-12-02 13:46:03'),
-(47, 1, 'Alien', '2024-12-17', '15:30:00', 'A', '2D Regular Doblada', 'A1,A2', 20.00, 'Marcos', 'Sanchez', '12345678', '2024-12-02 17:56:24');
+(1, 1, 'Alien', '2024-12-03', '14:30:00', 'A', '2D Regular Doblada', 'A1,A2,A3', 30.00, 'Juan', 'Pérez', '12345678', '2024-12-02 15:00:00'),
+(2, 1, 'Alien', '2024-12-03', '17:00:00', 'B', '3D Regular Doblada', 'B5,B6', 24.00, 'María', 'González', '23456789', '2024-12-02 16:15:00'),
+(3, 1, 'Alien', '2024-12-04', '15:00:00', 'B', '2D Regular Doblada', 'C8,C9,C10,D8,D9,D10', 60.00, 'Carlos', 'Rodríguez', '34567890', '2024-12-03 14:30:00'),
+(4, 1, 'Alien', '2024-12-05', '20:00:00', 'C', '3D Regular Doblada', 'E1,E2,E3,E4', 48.00, 'Ana', 'Martínez', '45678901', '2024-12-04 19:45:00'),
+(5, 2, 'Duna: Parte Dos', '2024-12-03', '15:30:00', 'B', '2D Regular Doblada', 'F7,F8,F9', 30.00, 'Pedro', 'López', '56789012', '2024-12-02 21:20:00'),
+(6, 2, 'Duna: Parte Dos', '2024-12-03', '18:30:00', 'A', '3D Regular Doblada', 'G3,G4,G5,G6', 48.00, 'Laura', 'Sánchez', '67890123', '2024-12-02 22:45:00'),
+(7, 2, 'Duna: Parte Dos', '2024-12-04', '14:00:00', 'C', '2D Regular Doblada', 'H1,H2', 20.00, 'Diego', 'Fernández', '78901234', '2024-12-03 15:10:00'),
+(8, 2, 'Duna: Parte Dos', '2024-12-05', '19:30:00', 'A', '3D Regular Doblada', 'I8,I9,I10,J8,J9,J10', 72.00, 'Sofía', 'Gómez', '89012345', '2024-12-04 18:30:00'),
+(9, 3, 'Blue Beetle', '2024-12-03', '16:00:00', 'C', '2D Regular Doblada', 'A5,A6,A7,A8', 40.00, 'Javier', 'Torres', '90123456', '2024-12-03 00:00:00'),
+(10, 3, 'Blue Beetle', '2024-12-03', '19:00:00', 'D', '3D Regular Doblada', 'B1,B2,B3', 36.00, 'Carmen', 'Ruiz', '01234567', '2024-12-03 01:15:00'),
+(11, 3, 'Blue Beetle', '2024-12-04', '15:30:00', 'A', '2D Regular Doblada', 'C3,C4,C5', 30.00, 'Miguel', 'Hernández', '12345670', '2024-12-03 16:45:00'),
+(12, 3, 'Blue Beetle', '2024-12-05', '17:00:00', 'D', '2D Regular Doblada', 'D6,D7', 20.00, 'Isabel', 'Díaz', '23456701', '2024-12-04 21:00:00'),
+(13, 4, 'Señor de los anillos', '2024-12-03', '14:00:00', 'D', '2D Regular Doblada', 'E5,E6,E7,E8,E9', 50.00, 'Roberto', 'Moreno', '34567012', '2024-12-02 17:30:00'),
+(14, 4, 'Señor de los anillos', '2024-12-03', '17:30:00', 'C', '3D Regular Doblada', 'F2,F3,F4', 36.00, 'Elena', 'Jiménez', '45670123', '2024-12-02 19:00:00'),
+(15, 4, 'Señor de los anillos', '2024-12-04', '16:30:00', 'B', '2D Regular Doblada', 'G8,G9,G10', 30.00, 'Francisco', 'Álvarez', '56701234', '2024-12-03 18:15:00'),
+(16, 4, 'Señor de los anillos', '2024-12-05', '18:30:00', 'D', '3D Regular Doblada', 'H4,H5,H6,H7', 48.00, 'Lucía', 'Romero', '67012345', '2024-12-04 22:30:00'),
+(17, 1, 'Alien', '2024-12-04', '18:00:00', 'D', '3D Regular Doblada', 'I1,I2', 24.00, 'Andrés', 'Vargas', '78123456', '2024-12-03 20:45:00'),
+(18, 2, 'Duna: Parte Dos', '2024-12-05', '16:00:00', 'B', '2D Regular Doblada', 'J5,J6,J7', 30.00, 'Marta', 'Castro', '89234567', '2024-12-04 15:30:00'),
+(19, 3, 'Blue Beetle', '2024-12-04', '18:30:00', 'B', '3D Regular Doblada', 'A9,A10', 24.00, 'Raúl', 'Ortega', '90345678', '2024-12-04 00:00:00'),
+(20, 4, 'Señor de los anillos', '2024-12-05', '15:00:00', 'C', '2D Regular Doblada', 'B7,B8,B9,B10', 40.00, 'Patricia', 'Navarro', '01456789', '2024-12-04 16:15:00'),
+(21, 1, 'Alien', '2024-12-05', '16:30:00', 'A', '2D Regular Doblada', 'C1,C2', 20.00, 'Gabriel', 'Mendoza', '12567890', '2024-12-04 19:00:00'),
+(22, 2, 'Duna: Parte Dos', '2024-12-04', '17:30:00', 'D', '3D Regular Doblada', 'D1,D2,D3,D4,D5', 60.00, 'Silvia', 'Ramos', '23678901', '2024-12-03 21:30:00'),
+(23, 3, 'Blue Beetle', '2024-12-05', '20:30:00', 'C', '3D Regular Doblada', 'E10', 12.00, 'Óscar', 'Flores', '34789012', '2024-12-04 23:45:00'),
+(24, 4, 'Señor de los anillos', '2024-12-04', '20:00:00', 'A', '3D Regular Doblada', 'F5,F6', 24.00, 'Natalia', 'Herrera', '45890123', '2024-12-04 02:00:00'),
+(25, 1, 'Alien', '2024-12-03', '19:30:00', 'C', '2D Regular Doblada', 'G1,G2', 20.00, 'Hugo', 'Medina', '56901234', '2024-12-03 03:15:00'),
+(26, 2, 'Duna: Parte Dos', '2024-12-04', '14:00:00', 'C', '2D Regular Doblada', 'H8,H9,H10', 30.00, 'Clara', 'Vega', '67012346', '2024-12-03 14:00:00'),
+(27, 3, 'Blue Beetle', '2024-12-03', '16:00:00', 'C', '2D Regular Doblada', 'I3,I4,I5,I6', 40.00, 'Adrián', 'Guerrero', '78123457', '2024-12-02 18:45:00'),
+(28, 4, 'Señor de los anillos', '2024-12-05', '15:00:00', 'C', '2D Regular Doblada', 'J1,J2,J3,J4', 40.00, 'Beatriz', 'Soto', '89234568', '2024-12-04 15:00:00');
 
 -- --------------------------------------------------------
 
@@ -272,7 +278,7 @@ ALTER TABLE `pelicula`
 -- AUTO_INCREMENT de la tabla `reserva`
 --
 ALTER TABLE `reserva`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `sala`
