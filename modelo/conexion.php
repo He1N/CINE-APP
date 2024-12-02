@@ -1,19 +1,17 @@
 <?php
-#CONEXIÓN A LA BASE DE DATOS -> CINEMA
-Class Conexion{
 
-	static public function conectar(){
+class Conexion {
 
-		$link = new PDO("mysql:host=localhost;dbname=",
-						"root",
-						"");
+    static public function conectar() {
 
-		$link->exec("set names utf8");
+        $link = new PDO("mysql:host=localhost;dbname=cine",
+                        "root",
+                        "");
 
-		return $link;
+        $link->exec("set names utf8");
 
-	}
+        return $link;
+
+    }
 
 }
-
-?>

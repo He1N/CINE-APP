@@ -1,9 +1,8 @@
 <?php
-require_once 'conexion.php';
+require_once '../modelo/conexion.php';
 
 class ReservaModelo {
     private $conexion;
-    private $tabla = "reserva";
 
     public function __construct() {
         $this->conexion = Conexion::conectar();
@@ -11,15 +10,15 @@ class ReservaModelo {
 
     public function crearReserva($datos) {
         try {
-            $sql = "INSERT INTO {$this->tabla} (pelicula_id, pelicula_nombre, fecha_reserva, hora_reserva, formato, asientos, total, cliente_nombres, cliente_apellidos, cliente_dni) 
-                    VALUES (:pelicula_id, :pelicula_nombre, :fecha_reserva, :hora_reserva, :formato, :asientos, :total, :cliente_nombres, :cliente_apellidos, :cliente_dni)";
+            $sql = "INSERT INTO reserva (pelicula_id, pelicula_nombre, fecha_reserva, hora_reserva, sala, formato, asientos, total, cliente_nombres, cliente_apellidos, cliente_dni) 
+                    VALUES (:pelicula_id, :pelicula_nombre, :fecha_reserva, :hora_reserva, :sala, :formato, :asientos, :total, :cliente_nombres, :cliente_apellidos, :cliente_dni)";
             
             $stmt = $this->conexion->prepare($sql);
-            
             $stmt->bindParam(':pelicula_id', $datos['pelicula_id'], PDO::PARAM_INT);
             $stmt->bindParam(':pelicula_nombre', $datos['pelicula_nombre'], PDO::PARAM_STR);
             $stmt->bindParam(':fecha_reserva', $datos['fecha_reserva'], PDO::PARAM_STR);
             $stmt->bindParam(':hora_reserva', $datos['hora_reserva'], PDO::PARAM_STR);
+            $stmt->bindParam(':sala', $datos['sala'], PDO::PARAM_STR);
             $stmt->bindParam(':formato', $datos['formato'], PDO::PARAM_STR);
             $stmt->bindParam(':asientos', $datos['asientos'], PDO::PARAM_STR);
             $stmt->bindParam(':total', $datos['total'], PDO::PARAM_STR);
@@ -27,34 +26,47 @@ class ReservaModelo {
             $stmt->bindParam(':cliente_apellidos', $datos['cliente_apellidos'], PDO::PARAM_STR);
             $stmt->bindParam(':cliente_dni', $datos['cliente_dni'], PDO::PARAM_STR);
 
-            return $stmt->execute();
+            $stmt->execute();
+            return $this->conexion->lastInsertId();
         } catch (PDOException $e) {
             error_log("Error al crear reserva: " . $e->getMessage());
             return false;
         }
     }
 
-    public function obtenerReservaPorId($id) {
+    public function obtenerAsientosOcupados($peliculaId, $fecha, $hora) {
         try {
-            $stmt = $this->conexion->prepare("SELECT * FROM {$this->tabla} WHERE id = :id");
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $sql = "SELECT asientos FROM reserva WHERE pelicula_id = :pelicula_id AND fecha_reserva = :fecha_reserva AND hora_reserva = :hora_reserva";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindParam(':pelicula_id', $peliculaId, PDO::PARAM_INT);
+            $stmt->bindParam(':fecha_reserva', $fecha, PDO::PARAM_STR);
+            $stmt->bindParam(':hora_reserva', $hora, PDO::PARAM_STR);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            $asientosOcupados = [];
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $asientosOcupados = array_merge($asientosOcupados, explode(',', $row['asientos']));
+            }
+            return array_unique($asientosOcupados);
         } catch (PDOException $e) {
-            error_log("Error al obtener reserva: " . $e->getMessage());
-            return false;
+            error_log("Error al obtener asientos ocupados: " . $e->getMessage());
+            return [];
         }
     }
 
-    public function obtenerReservasPorUsuario($dni) {
+    public function guardarAsientosReservados($idReserva, $asientos) {
         try {
-            $stmt = $this->conexion->prepare("SELECT * FROM {$this->tabla} WHERE cliente_dni = :dni ORDER BY fecha_hora_transaccion DESC");
-            $stmt->bindParam(':dni', $dni, PDO::PARAM_STR);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $sql = "UPDATE reserva SET asientos = :asientos WHERE id = :id_reserva";
+            $stmt = $this->conexion->prepare($sql);
+            $asientosString = implode(',', $asientos);
+            $stmt->bindParam(':asientos', $asientosString, PDO::PARAM_STR);
+            $stmt->bindParam(':id_reserva', $idReserva, PDO::PARAM_INT);
+            return $stmt->execute();
         } catch (PDOException $e) {
-            error_log("Error al obtener reservas del usuario: " . $e->getMessage());
+            error_log("Error al guardar asientos reservados: " . $e->getMessage());
             return false;
         }
     }
 }
+?>
+

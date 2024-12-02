@@ -65,4 +65,17 @@ class UsuarioModelo {
             return false;
         }
     }
+
+    public function obtenerUsuarioPorId($id) {
+    try {
+        $stmt = $this->conexion->prepare("SELECT id, nombres, apellidos, dni, correo FROM {$this->tabla} WHERE id = :id LIMIT 1");
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Error al obtener usuario por ID: " . $e->getMessage());
+        return false;
+    }
 }
+}
+
