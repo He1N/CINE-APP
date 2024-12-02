@@ -104,11 +104,11 @@
           <th style="width:10px">#</th>
           <th>Foto</th> 
           <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Correo</th>
           <th>Contraseña</th>
-          <th>Email</th>
           <th>Tipo de Usuario</th> 
           <th>DNI</th>     
-          <th>Acciones</th>
         </tr>   
 
       </thead>

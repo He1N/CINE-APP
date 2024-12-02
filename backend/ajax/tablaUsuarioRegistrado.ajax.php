@@ -31,16 +31,15 @@ class TablaUsuarioRegistrado{
 
 		foreach ($respuesta as $key => $value) {
 
-		$acciones = "<div class='btn-group'><i class='fas fa-trash-alt'></i></button></div>";
 		$datosJson .='[
 				      "'.($key+1).'",
                       "'.$value["foto"].'",
 				      "'.$value["nombres"].'",
+					  "'.$value["apellidos"].'",
+					  "'.$value["correo"].'",
 				      "'.$value["contrasena"].'",
-                      "'.$value["usuario"].'",
                       "'.$value["tipo_usuario"].'",
-                      "'.$value["dni"].'",
-					  "'.$acciones.'"
+                      "'.$value["dni"].'"
 				    ],';
 
 		}
