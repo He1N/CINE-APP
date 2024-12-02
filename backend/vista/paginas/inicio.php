@@ -50,6 +50,20 @@ try {
       $stmtMonthly->execute();
       $ventasMensuales = $stmtMonthly->fetchAll(PDO::FETCH_ASSOC);
 
+    // Fecha actual
+    $hoy = date('Y-m-d');
+
+    // Calcular ingresos de hoy
+    $stmtIngresos = $conn->prepare("SELECT SUM(total) AS ingresos FROM reserva WHERE DATE(fecha_hora_transaccion) = :hoy");
+    $stmtIngresos->execute(['hoy' => $hoy]);
+    $ingresos = $stmtIngresos->fetch(PDO::FETCH_ASSOC)['ingresos'] ?? 0;
+
+    // Contar reservas de hoy
+    $stmtReservas = $conn->prepare("SELECT COUNT(*) AS reservas FROM reserva WHERE DATE(fecha_hora_transaccion) = :hoy");
+    $stmtReservas->execute(['hoy' => $hoy]);
+    $reservas = $stmtReservas->fetch(PDO::FETCH_ASSOC)['reservas'] ?? 0;
+
+    
 } catch (PDOException $e) {
   echo "Error en las consultas: " . $e->getMessage();
   $peliculaMax = null;
@@ -106,46 +120,34 @@ try {
       <div class="container-fluid">
         <div class="row">
           <!-- Total de Ingresos de Hoy -->
-          <div class="col-md-4">
-            <div class="card bg-success text-white shadow-lg">
-              <div class="card-header d-flex align-items-center">
-                <i class="fas fa-coins fa-2x me-3"></i>
-                <h5 class="mb-0">Ingresos de Hoy</h5>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">$1,580</h3>
-                <p class="card-text">Total generado en ingresos hoy.</p>
-              </div>
-            </div>
-          </div>
+  <div class="col-md-6">
+    <div class="card bg-success text-white shadow-lg">
+      <div class="card-header d-flex align-items-center">
+        <i class="fas fa-coins fa-2x me-3"></i>
+        <h5 class="mb-0">Ingresos de Hoy</h5>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">$<?= number_format($ingresos, 2) ?></h3>
+        <p class="card-text">Total generado en ingresos hoy.</p>
+      </div>
+    </div>
+  </div>
 
-          <!-- Cantidad de Reservas de Hoy -->
-          <div class="col-md-4">
-            <div class="card bg-primary text-white shadow-lg">
-              <div class="card-header d-flex align-items-center">
-                <i class="fas fa-ticket-alt fa-2x me-3"></i>
-                <h5 class="mb-0">Reservas de Hoy</h5>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">125</h3>
-                <p class="card-text">Número de reservas realizadas hoy.</p>
-              </div>
-            </div>
-          </div>
+  <!-- Cantidad de Reservas de Hoy -->
+  <div class="col-md-6">
+    <div class="card bg-primary text-white shadow-lg">
+      <div class="card-header d-flex align-items-center">
+        <i class="fas fa-ticket-alt fa-2x me-3"></i>
+        <h5 class="mb-0">Reservas de Hoy</h5>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title"><?= $reservas ?></h3>
+        <p class="card-text">Número de reservas realizadas hoy.</p>
+      </div>
+    </div>
+  </div>
 
-          <!-- Cantidad de Usuarios Registrados Hoy -->
-          <div class="col-md-4">
-            <div class="card bg-warning text-white shadow-lg">
-              <div class="card-header d-flex align-items-center">
-                <i class="fas fa-user-plus fa-2x me-3"></i>
-                <h5 class="mb-0">Usuarios Registrados Hoy</h5>
-              </div>
-              <div class="card-body">
-                <h3 class="card-title">20</h3>
-                <p class="card-text">Usuarios nuevos registrados hoy.</p>
-              </div>
-            </div>
-          </div>
+  
 
           
         </div>
