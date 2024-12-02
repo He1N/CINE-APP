@@ -80,7 +80,63 @@
                         </div>
                     </div>
                 </div>
-        
+                <div class="container mt-5">
+                <!-- Tarjeta de Listado de Programaciones -->
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Listado de Programaciones</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-hover">
+                            <thead class="bg-secondary text-white">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Sala</th>
+                                    <th>Película</th>
+                                    <th>Fecha</th>
+                                    <th>Hora</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Conexión a la base de datos
+                                $conexion = new PDO("mysql:host=localhost;dbname=cine", "root", "");
+
+                                // Consulta para obtener la programación
+                                $programaciones = $conexion->query("
+                                    SELECT 
+                                        p.id_programacion, 
+                                        s.nombre_sala, 
+                                        pl.nombre AS nombre_pelicula, 
+                                        p.fecha, 
+                                        p.hora 
+                                    FROM programacion p
+                                    JOIN sala s ON p.id_sala = s.id_sala
+                                    JOIN pelicula pl ON p.id_pelicula = pl.id_p
+                                    ORDER BY p.fecha, p.hora
+                                ");
+
+                                // Mostrar resultados
+                                foreach ($programaciones as $index => $programacion) {
+                                    echo "<tr>
+                                        <td>" . ($index + 1) . "</td>
+                                        <td>{$programacion['nombre_sala']}</td>
+                                        <td>{$programacion['nombre_pelicula']}</td>
+                                        <td>{$programacion['fecha']}</td>
+                                        <td>{$programacion['hora']}</td>
+                                        <td>
+                                            <a href='?pagina=editar_programacion&id={$programacion['id_programacion']}' class='btn btn-warning btn-sm'>Editar</a>
+                                            <a href='?pagina=eliminar_programacion&id={$programacion['id_programacion']}' onclick='return confirm(\"¿Estás seguro de eliminar esta programación?\")' class='btn btn-danger btn-sm'>Eliminar</a>
+                                        </td>
+                                    </tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div> 
+                </div>                       
         </div>
     </section>
   </div>
@@ -110,3 +166,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+<?php
+if (isset($_GET['pagina']) && $_GET['pagina'] === 'eliminar_programacion' && isset($_GET['id'])) {
+    $id_programacion = $_GET['id'];
+
+    // Conexión a la base de datos
+    $conexion = new PDO("mysql:host=localhost;dbname=cine", "root", "");
+
+    // Eliminar la programación
+    $query = $conexion->prepare("DELETE FROM programacion WHERE id_programacion = ?");
+    $resultado = $query->execute([$id_programacion]);
+
+    if ($resultado) {
+        echo "<script>alert('Programación eliminada correctamente.'); window.location.href = '?pagina=entradas';</script>";
+    } else {
+        echo "<script>alert('Error al eliminar la programación.'); window.history.back();</script>";
+    }
+}
+?>
+<?php
+if (isset($_GET['pagina']) && $_GET['pagina'] === 'editar_programacion' && isset($_GET['id'])) {
+    $id_programacion = $_GET['id'];
+
+    // Conexión a la base de datos
+    $conexion = new PDO("mysql:host=localhost;dbname=cine", "root", "");
+
+    // Obtener datos actuales
+    $query = $conexion->prepare("SELECT * FROM programacion WHERE id_programacion = ?");
+    $query->execute([$id_programacion]);
+    $programacion = $query->fetch();
+
+    if (!$programacion) {
+        echo "<script>alert('Programación no encontrada.'); window.history.back();</script>";
+    }
+}
+?>
+
+<!-- Formulario de Edición -->
+<form action="?pagina=entradas" method="POST">
+    <input type="hidden" name="id_programacion" value="<?= $programacion['id_programacion'] ?>">
+    <!-- Resto del formulario como en la creación -->
+</form>
