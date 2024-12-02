@@ -27,42 +27,7 @@
 
   <ul class="navbar-nav ml-auto">
 
-    <li class="nav-item dropdown">
-
-      <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-
-        <i class="far fa-bell"></i>
-
-
-      </a>
-
-      <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        
-        <span class="dropdown-item dropdown-header"><?php echo $totalNotificaciones; ?> Notificaciones</span>
-
-        <div class="dropdown-divider"></div>
-
-        <a href="index.php?pagina=reservas&not=0" class="dropdown-item">
-
-          <i class="far fa-calendar-alt mr-2 float-right"></i>
-
-          <span class="badge badge-info "><?php echo $totalReservas; ?> Reservas nuevas</span>
-
-        </a>
-
-         <div class="dropdown-divider"></div>
-
-        <a href="index.php?pagina=testimonios&not=0" class="dropdown-item">
-
-          <i class="fas fa-user-check mr-2 float-right"></i>
-
-          <span class="badge badge-info "><?php echo $totalTestimonios; ?> Testimonios nuevos</span>
-
-        </a>
-
-      </div>
-
-    </li>
+    
 
     <!--=====================================
     Botón salir del sistema
