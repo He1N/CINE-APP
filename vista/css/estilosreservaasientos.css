@@ -1,0 +1,373 @@
+body {
+    background-color: #1a0808;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+.movie-banner {
+    width: 100%;
+    position: relative;
+    text-align: center;
+    background-color: #000;
+    overflow: hidden;
+    min-height: 300px;
+}
+.movie-banner img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+.movie-poster-container {
+    position: relative;
+    z-index: 20;
+    margin-top: -250px;
+    padding-left: 2rem;
+}
+.movie-poster {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+.instructions-box {
+    background-color: #341616;
+    color: white;
+    padding: 2rem;
+    margin-top: 1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.instructions-box h2 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.instructions-box ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.instructions-box li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.instructions-box .number {
+    background-color: #F5E6D3;
+    color: #341616;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 1rem;
+}
+.instructions-box .text {
+    font-size: 1rem;
+}
+.movie-title {
+    color: #ffffff;
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%) translateY(30%);
+    z-index: 30;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+}
+.booking-container {
+    padding: 1rem 1rem 2rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+}
+.booking-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    position: relative;
+    max-width: 600px;
+}
+.booking-steps::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.step {
+    color: #9a9a9a;
+    padding: 0.75rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    background-color: transparent;
+}
+.step::before {
+    content: attr(data-number);
+    font-size: 1rem;
+    font-weight: bold;
+    background-color: #2a1515;
+    color: #9a9a9a;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+    margin-right: 0.25rem;
+}
+.step.active::before {
+    color: #ffffff;
+}
+.step.active span {
+    color: #ffffff;
+}
+.step.active {
+    position: relative;
+}
+.step.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #4caf50;
+    z-index: 1;
+}
+.dates-container {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 15%;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-top: 0.5rem;
+    padding-bottom: 1rem;
+}
+.date-button {
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 0.75rem;
+    min-width: 80px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+.date-button div {
+    line-height: 1.2;
+}
+.date-button:hover {
+    background-color: transparent;
+    color: #BDDC9F;
+    border-color: #BDDC9F;
+}
+.date-button.active {
+    border-color: #BDDC9F;
+    color: #BDDC9F;
+}
+.showtime-section {
+    background-color: transparent;
+    padding: 0.5rem 0;
+    margin: 0.25rem 0 0.75rem;
+    border-radius: 5px;
+    text-align: center;
+}
+.showtime-button {
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    margin: 0.25rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    display: inline-block;
+}
+.showtime-button:hover {
+    background-color: transparent;
+    color: #BDDC9F;
+    border-color: #BDDC9F;
+}
+.showtime-button.active {
+    border-color: #BDDC9F;
+    color: #BDDC9F;
+}
+.btn-back {
+    background-color: transparent;
+    border: 1px solid #F35454;
+    color: #F35454;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+.btn-back:hover {
+    background-color: transparent;
+    border-color: #F35454;
+    color: #F35454;
+}
+.btn-confirm {
+    background-color: transparent;
+    border: 1px solid #BDDC9F;
+    color: #BDDC9F;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+.btn-confirm:hover {
+    background-color: transparent;
+    color: #BDDC9F;
+    border-color: #BDDC9F;
+}
+.format-title {
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 0.75rem;
+    font-size: 1.2em;
+    width: 80%;
+    text-align: left;
+    margin-left: 10%;
+    margin-right: auto;
+}
+.section-title {
+    color: #FFD700;
+    font-weight: bold;
+}
+.format-title-container {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+.showtime-container {
+    background-color: #341616;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    width: 90%;
+    max-width: 600px;
+    margin-left: 0;
+    margin-right: auto;
+    border-radius: 10px;
+}
+.container-fluid {
+    max-width: 1400px;
+    margin-top: 2rem;
+}
+h5.mb-3 {
+    margin-top: 1em !important;
+    margin-bottom: 0.5em !important;
+    font-size: 1em;
+}
+.form-label {
+    margin-bottom: 0.5rem;
+    font-size: 1em;
+}
+.form-control {
+    margin-bottom: 1rem;
+}
+.screen {
+    background: linear-gradient(145deg, #c0c0c0, #e0e0e0);
+    height: 40px;
+    width: 100%;
+    margin: 0 auto 20px;
+    transform: perspective(300px) rotateX(-10deg);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-weight: bold;
+    font-size: 1.2em;
+    letter-spacing: 2px;
+}
+.seats-container {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+    padding: 10px;
+}
+.seat {
+    background-color: #2a2a2a;
+    height: 25px;
+    width: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.seat-label {
+    font-size: 8px;
+    color: #666;
+    position: absolute;
+}
+.seat.selected {
+    background-color: #4CAF50;
+}
+.seat.occupied {
+    background-color: #ff3333;
+    cursor: not-allowed;
+}
+.seat.selected .seat-label,
+.seat.occupied .seat-label {
+    color: white;
+}
+.booking-info {
+    margin-bottom: 20px;
+}
+.seat-selection-container {
+    background-color: #1a0808;
+    border: 1px solid #3a3a3a;
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.seat-map {
+    flex: 0 0 60%;
+    max-width: 60%;
+}
+.seat-info-container {
+    flex: 0 0 40%;
+    max-width: 40%;
+    padding-left: 20px;
+}
+.seat-info {
+    margin-top: 20px;
+}
+.seat-type {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.seat-type .seat {
+    margin-right: 10px;
+}
