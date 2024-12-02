@@ -7,11 +7,42 @@ if($admin["perfil"] != "Administrador"){
   return;
 }
 
+// Conexión con PDO
+// Conexión a la base de datos
+$conn = new PDO("mysql:host=localhost;dbname=cine", "root", "");
+try {
+    // Película con más reservas
+    $sqlMax = "SELECT p.nombre, p.imagen, COUNT(r.id) AS total_reservas 
+               FROM pelicula p
+               JOIN reserva r ON p.id = r.pelicula_id
+               GROUP BY p.id
+               ORDER BY total_reservas DESC 
+               LIMIT 1";
+    $stmtMax = $conn->prepare($sqlMax);
+    $stmtMax->execute();
+    $peliculaMax = $stmtMax->fetch(PDO::FETCH_ASSOC);
+
+    // Película con menos reservas
+    $sqlMin = "SELECT p.nombre, p.imagen, COUNT(r.id) AS total_reservas 
+               FROM pelicula p
+               LEFT JOIN reserva r ON p.id = r.pelicula_id
+               GROUP BY p.id
+               ORDER BY total_reservas ASC 
+               LIMIT 1";
+    $stmtMin = $conn->prepare($sqlMin);
+    $stmtMin->execute();
+    $peliculaMin = $stmtMin->fetch(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    echo "Error en las consultas: " . $e->getMessage();
+    $peliculaMax = null;
+    $peliculaMin = null;
+}
+
 ?>
 
 <div class="wrapper">
   
-
   <!-- Content Wrapper -->
   <div class="content-wrapper" style="min-height: 717px;">
     <!-- Content Header -->
@@ -80,6 +111,51 @@ if($admin["perfil"] != "Administrador"){
               <div class="card-body">
                 <h5 class="card-title">3</h5>
                 <p class="card-text">Alertas sin resolver.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cards for Movie Analytics -->
+        <div class="row mt-4">
+          <!-- Película con más reservas -->
+          <div class="col-6">
+            <div class="card bg-info text-white">
+              <div class="card-header">
+                <i class="fas fa-film"></i> Película con Más Reservas
+              </div>
+              <div class="card-body text-center">
+                <img src="<?= $peliculaMax ? $peliculaMax['imagen'] : 'vista/default.png'; ?>" 
+                     alt="Imagen de <?= $peliculaMax ? $peliculaMax['nombre'] : 'película'; ?>" 
+                     class="img-fluid mb-3" 
+                     style="max-height: 200px;">
+                <h5 class="card-title">
+                  <?= $peliculaMax ? $peliculaMax['nombre'] : 'Sin datos'; ?>
+                </h5>
+                <p class="card-text">
+                  Reservas: <?= $peliculaMax ? $peliculaMax['total_reservas'] : '0'; ?>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Película con menos reservas -->
+          <div class="col-6">
+            <div class="card bg-secondary text-white">
+              <div class="card-header">
+                <i class="fas fa-film"></i> Película con Menos Reservas
+              </div>
+              <div class="card-body text-center">
+                <img src="<?= $peliculaMin ? $peliculaMin['imagen'] : 'ruta/default.jpg'; ?>" 
+                     alt="Imagen de <?= $peliculaMin ? $peliculaMin['nombre'] : 'película'; ?>" 
+                     class="img-fluid mb-3" 
+                     style="max-height: 200px;">
+                <h5 class="card-title">
+                  <?= $peliculaMin ? $peliculaMin['nombre'] : 'Sin datos'; ?>
+                </h5>
+                <p class="card-text">
+                  Reservas: <?= $peliculaMin ? $peliculaMin['total_reservas'] : '0'; ?>
+                </p>
               </div>
             </div>
           </div>
