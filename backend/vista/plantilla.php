@@ -152,7 +152,7 @@ include "paginas/login.php";
 		=============================================*/
 
 		if (isset($_GET["pagina"])) {
-			if ($_GET["pagina"] == "inicio" || $_GET["pagina"] == "usuarios" || $_GET["pagina"] == "peliculas" || $_GET["pagina"] == "web" || $_GET["pagina"] == "salir") {
+			if ($_GET["pagina"] == "inicio" || $_GET["pagina"] == "usuarios" || $_GET["pagina"] == "peliculas" || $_GET["pagina"] == "entradas" || $_GET["pagina"] == "web" || $_GET["pagina"] == "salir") {
 				include "paginas/".$_GET["pagina"].".php";
 			} else {
 				include "paginas/error404.php";

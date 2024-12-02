@@ -71,10 +71,10 @@
         <!-- Botón página entradas -->
 
         <li class="nav-item">
-          <a href="entradas" class="nav-link">
+          <a href="?pagina=entradas" class="nav-link">
           <i class="nav-icon fas fa-film"></i>
           <p>
-              Banner
+              Salas de cine
             </p>
           </a>
         </li>
