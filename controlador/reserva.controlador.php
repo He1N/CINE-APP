@@ -9,64 +9,75 @@ class ReservaControlador {
     }
 
     public function crearReserva($datos) {
-        // Validación de datos
-        if (empty($datos['pelicula_id']) || empty($datos['pelicula_nombre']) || 
-            empty($datos['fecha_reserva']) || empty($datos['hora_reserva']) || 
-            empty($datos['formato']) || empty($datos['asientos']) || 
-            empty($datos['total']) || empty($datos['cliente_nombres']) || 
-            empty($datos['cliente_apellidos']) || empty($datos['cliente_dni'])) {
-            return "Todos los campos son obligatorios.";
-        }
+        try {
+            // Validar datos
+            $validacion = $this->validarDatos($datos);
+            if (!$validacion['valido']) {
+                return [
+                    'exito' => false, 
+                    'mensaje' => 'Datos de reserva inválidos: ' . $validacion['mensaje']
+                ];
+            }
 
-        // Validación adicional según sea necesario
-        if (!is_numeric($datos['pelicula_id']) || $datos['pelicula_id'] <= 0) {
-            return "ID de película inválido.";
-        }
+            // Intentar crear la reserva
+            $idReserva = $this->modelo->crearReserva($datos);
 
-        if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $datos['fecha_reserva'])) {
-            return "Formato de fecha inválido.";
-        }
-
-        if (!preg_match("/^\d{2}:\d{2}$/", $datos['hora_reserva'])) {
-            return "Formato de hora inválido.";
-        }
-
-        if (!is_numeric($datos['total']) || $datos['total'] <= 0) {
-            return "Total inválido.";
-        }
-
-        // Intentar crear la reserva
-        if ($this->modelo->crearReserva($datos)) {
-            return true;
-        } else {
-            return "Error al crear la reserva. Por favor, inténtalo de nuevo más tarde.";
+            if ($idReserva) {
+                return [
+                    'exito' => true, 
+                    'mensaje' => 'Reserva creada con éxito', 
+                    'id_reserva' => $idReserva
+                ];
+            } else {
+                return [
+                    'exito' => false, 
+                    'mensaje' => 'Error al crear la reserva en la base de datos'
+                ];
+            }
+        } catch (Exception $e) {
+            error_log("Error en ReservaControlador::crearReserva: " . $e->getMessage());
+            return [
+                'exito' => false,
+                'mensaje' => 'Error interno del servidor'
+            ];
         }
     }
 
-    public function obtenerReservaPorId($id) {
-        $id = filter_var($id, FILTER_VALIDATE_INT);
-        if (!$id) {
-            return "ID de reserva inválido.";
+    private function validarDatos($datos) {
+        $camposRequeridos = [
+            'pelicula_id', 'pelicula_nombre', 'fecha_reserva', 
+            'hora_reserva', 'sala', 'formato', 'asientos', 
+            'total', 'cliente_nombres', 'cliente_apellidos', 'cliente_dni'
+        ];
+        
+        foreach ($camposRequeridos as $campo) {
+            if (!isset($datos[$campo]) || empty($datos[$campo])) {
+                return ['valido' => false, 'mensaje' => "El campo $campo es requerido."];
+            }
         }
 
-        $reserva = $this->modelo->obtenerReservaPorId($id);
-        if ($reserva) {
-            return $reserva;
-        } else {
-            return "No se encontró la reserva.";
+        if (!is_numeric($datos['pelicula_id'])) {
+            return ['valido' => false, 'mensaje' => 'El ID de la película debe ser numérico.'];
         }
+
+        if (!preg_match("/^\d{8}$/", $datos['cliente_dni'])) {
+            return ['valido' => false, 'mensaje' => 'El DNI debe tener 8 dígitos.'];
+        }
+
+        if (!is_numeric(str_replace(',', '.', $datos['total'])) || floatval(str_replace(',', '.', $datos['total'])) <= 0) {
+            return ['valido' => false, 'mensaje' => 'El total debe ser un número positivo.'];
+        }
+
+        return ['valido' => true, 'mensaje' => ''];
     }
 
-    public function obtenerReservasPorUsuario($dni) {
-        if (empty($dni) || strlen($dni) != 8) {
-            return "DNI inválido.";
-        }
+    public function obtenerAsientosOcupados($peliculaId, $fecha, $hora) {
+        return $this->modelo->obtenerAsientosOcupados($peliculaId, $fecha, $hora);
+    }
 
-        $reservas = $this->modelo->obtenerReservasPorUsuario($dni);
-        if ($reservas) {
-            return $reservas;
-        } else {
-            return "No se encontraron reservas para este usuario.";
-        }
+    public function guardarAsientosReservados($idReserva, $asientos) {
+        return $this->modelo->guardarAsientosReservados($idReserva, $asientos);
     }
 }
+?>
+

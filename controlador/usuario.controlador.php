@@ -56,4 +56,9 @@ class UsuarioControlador {
         session_destroy();
         return true;
     }
+
+    public function obtenerUsuarioPorId($id) {
+        return $this->modelo->obtenerUsuarioPorId($id);
+    }
 }
+
