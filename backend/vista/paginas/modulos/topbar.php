@@ -1,15 +1,4 @@
-<?php
 
-// Verificar si el usuario está logueado
-if (isset($_SESSION['usuario']) && isset($_SESSION['rol'])) {
-    $username = $_SESSION['usuario']; // Nombre de usuario extraído de la sesión
-    $role = $_SESSION['rol']; // Rol del usuario extraído de la sesión
-} else {
-    // Si no hay sesión activa, redirigir al login
-    header("Location: login.php");
-    exit();
-}
-?>
 <head>
     <link rel="stylesheet" href="./css/topbar.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
