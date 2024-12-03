@@ -699,10 +699,7 @@ $pageTitle = "Reserva para " . $pelicula['nombre'];
                 doc.setFont("helvetica", "bold");
                 centerText(data.pelicula_nombre, logoY + logoHeight + 15);
 
-                // Instrucciones
-                doc.setFontSize(10);
-                doc.setFont("helvetica", "normal");
-                centerText("Muestra el código QR desde tu celular para canjear tus combos e ingresar a la sala.", logoY + logoHeight + 25);
+                
 
                 // Detalles de la reserva
                 const startY = logoY + logoHeight + 40;
@@ -752,13 +749,10 @@ $pageTitle = "Reserva para " . $pelicula['nombre'];
                 doc.text('Estimado Cliente', 20, startY + 113); 
                 doc.text('Para un mejor servicio realiza los siguientes pasos:', 20, startY + 118); 
                 const conditions = [
-                    'La compra y el canje de las entradas y/o combos, solo son válidos para el mismo día de la función.',
                     'Esta compra no permite cambio de función, anulación y/o devolución de dinero.',
-                    'Presenta desde tu smartphone este documento con el código QR en el ingreso a salas. No tiene que pasar por boletería ni imprimirlo.',
                     'Dirígete directamente al ingreso de tu sala.',
                     'Cualquier duda respecto al pago, realízala directamente con tu banco emisor.',
-                    '¡Sin colas! Dirígete directamente a la sala. No necesitas pasar por boletería.',
-                    'Respetar los protocolos de prevención covid-19 en nuestras instalaciones por disposición del estado. Caso contrario el establecimiento se reserva el derecho de retirar a la persona de sala.'
+                    '¡Sin colas! Dirígete directamente a la sala. No necesitas pasar por boletería.'
                 ];
 
                 let conditionYPos = startY + 125; 
@@ -769,7 +763,7 @@ $pageTitle = "Reserva para " . $pelicula['nombre'];
 
                 // Pie de página
                 doc.setFontSize(8);
-                doc.text('Cineplex S.A - Av. José Larco N° 663 – Pisos 4 - 5 - Miraflores - Lima - Lima.', 20, pageHeight - 10);
+                doc.text('Cinesmero S.A - Av. José Larco N° 663 – Pisos 4 - 5 - Miraflores - Lima - Lima.', 20, pageHeight - 10);
 
                 return doc;
             } catch (error) {
